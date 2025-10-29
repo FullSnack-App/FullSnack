@@ -8,6 +8,7 @@ function App() {
       <HeroSection></HeroSection>
       <Footer></Footer>
     </>
+
   );
 }
 
