@@ -11,6 +11,13 @@
     font-family: var(--font-sans);
   }
 }
+
+@layer components {
+  .container-customized {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
 @theme {
   --color-hover: #e9ebef;
   --color-grays: #000000;

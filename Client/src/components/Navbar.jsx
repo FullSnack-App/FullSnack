@@ -15,7 +15,8 @@ const Navbar = () => {
       "active:bg-transparent",
       "focus:bg-transparent",
       "rounded-lg",
-      isActive && "text-primary font-semibold"
+      isActive && "text-primary font-semibold",
+      "text-xl"
     );
 
   const iconButtonClasses = clsx(
@@ -34,7 +35,7 @@ const Navbar = () => {
     <div className={navClasses}>
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden rounded-lg">
+          <div tabIndex={0} role="button" className={`${iconButtonClasses} lg:hidden`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -45,55 +46,29 @@ const Navbar = () => {
             </svg>
           </div>
           <ul tabIndex={-1} className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white">
-            <li>
-              <NavLink to="/" className={getMenuItemClasses}>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/menu" className={getMenuItemClasses}>
-                Menu
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/about" className={getMenuItemClasses}>
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/contact" className={getMenuItemClasses}>
-                Contact
-              </NavLink>
-            </li>
+            {["/", "/menu", "/about", "/contact"].map((path, i) => (
+              <li key={i}>
+                <NavLink to={path} className={getMenuItemClasses}>
+                  {["Home", "Menu", "About", "Contact"][i]}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
         <Link to="/" className="flex items-center">
           <img src={Logo} alt="Logo" className="h-10 object-fill rounded-md" />
-          <p className="font-bold text-lg ml-2 text-primary">FullSnack</p>
+          <p className="font-bold text-xl ml-2 text-primary">FullSnack</p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-lg">
-          <li>
-            <NavLink to="/" className={getMenuItemClasses}>
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/menu" className={getMenuItemClasses}>
-              Menu
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/about" className={getMenuItemClasses}>
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact" className={getMenuItemClasses}>
-              Contact
-            </NavLink>
-          </li>
+          {["/", "/menu", "/about", "/contact"].map((path, i) => (
+            <li key={i}>
+              <NavLink to={path} className={getMenuItemClasses}>
+                {["Home", "Menu", "About", "Contact"][i]}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navbar-end">
