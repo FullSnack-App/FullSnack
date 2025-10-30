@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { NavLink, Link } from "react-router";
 import Logo from "../assets/logo.png";
 import clsx from "clsx";
+import Sidebar from "./Sidebar";
 
 const Navbar = () => {
+  const [isCartOpen, setIsCartOpen] = React.useState(false);
   const navClasses = clsx("navbar", "shadow-sm", "bg-white", "text-gray-800", "text-lg");
+
+  const handleCartClose = useCallback(() => {
+    setIsCartOpen(false);
+  }, []);
 
   const getMenuItemClasses = ({ isActive }) =>
     clsx(
@@ -32,7 +38,10 @@ const Navbar = () => {
   );
 
   return (
-    <div className={navClasses}>
+    <div className={navClasses} onClick={isCartOpen && handleCartClose}>
+      <div className="absolute">
+        <Sidebar isOpen={isCartOpen} handleCartOpen={handleCartClose} />
+      </div>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className={`${iconButtonClasses} lg:hidden`}>
@@ -102,7 +111,7 @@ const Navbar = () => {
             />
           </svg>
         </button>
-        <Link to="/checkout" className={iconButtonClasses}>
+        <button onClick={() => setIsCartOpen(true)} className={iconButtonClasses}>
           <div className="indicator">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +127,7 @@ const Navbar = () => {
               />
             </svg>
           </div>
-        </Link>
+        </button>
       </div>
     </div>
   );
