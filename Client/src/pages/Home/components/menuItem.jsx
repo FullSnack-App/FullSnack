@@ -65,7 +65,7 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
                             <Minus size={18} />
                         </button>
 
-                        <span className="text-lg font-semibold">{quantity}</span>
+                        <span className="text-lg text-gray-700 font-semibold">{quantity}</span>
 
                         <button
                             onClick={() => setQuantity((q) => q + 1)}
