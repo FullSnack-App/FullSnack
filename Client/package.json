@@ -8,19 +8,19 @@
         "build": "vite build",
         "lint": "eslint .",
         "preview": "vite preview",
-        "commit": "cz",
-        "format": "prettier --write ."
+        "commit": "cz"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.16",
         "axios": "^1.13.1",
         "clsx": "^2.1.1",
         "daisyui": "^5.3.10",
-        "lucide-react": "^0.548.0",
+        "lucide-react": "^0.552.0",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "react-hook-form": "^7.65.0",
         "react-hot-toast": "^2.6.0",
+        "react-icons": "^5.5.0",
         "react-router": "^7.9.4",
         "tailwindcss": "^4.1.16"
     },
@@ -34,7 +34,6 @@
         "eslint-plugin-react-hooks": "^5.2.0",
         "eslint-plugin-react-refresh": "^0.4.22",
         "globals": "^16.4.0",
-        "prettier": "^3.6.2",
         "vite": "^7.1.7"
     },
     "config": {

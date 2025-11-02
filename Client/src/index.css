@@ -1,5 +1,29 @@
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "tailwindcss";
 @plugin "daisyui";
+
+@layer base {
+  body {
+    --color-primary: oklch(70% 0.21 60);
+    --color-primary-content: oklch(98% 0.01 250);
+    --color-secondary: oklch(65% 0.24 354.3);
+    --color-secondary-content: white;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .container-customized {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@theme {
+  --color-hover: #e9ebef;
+  --color-grays: #000000;
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
 
 @layer utilities {
     .container {

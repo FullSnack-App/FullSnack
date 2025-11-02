@@ -1,4 +1,4 @@
-import MenuItem from './menuItem';
+import MenuItem from './MenuItem';
 import SkeletonMenuItem from '../../../components/skeletonMenuItem';
 
 function MenuList({ menulist, className = '' }) {
