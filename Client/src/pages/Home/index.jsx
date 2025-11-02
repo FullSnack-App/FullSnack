@@ -1,7 +1,13 @@
-import React from "react";
-
+import React from 'react';
+import HeroSection from './components/HeroSection';
+import Menu from './components/Menu';
 const Home = () => {
-  return <div>Home</div>;
+    return (
+        <>
+            <HeroSection />
+            <Menu />
+        </>
+    );
 };
 
 export default Home;

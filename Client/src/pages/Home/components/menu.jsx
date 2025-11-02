@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TogglerGroup from '../../../components/toggleGroup';
-import MenuList from './menuList';
+import MenuList from './MenuList';
 
 function Menu() {
     const mealItems = [

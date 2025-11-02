@@ -6,7 +6,7 @@ import { MdEmail, MdPhone } from 'react-icons/md';
 export default function Footer() {
     return (
         <footer className="bg-[#0E1626] text-gray-300 px-8 md:px-20 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-20 border-b border-gray-700 pb-10">
+            <div className="">
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                         <div className="bg-[#FF5722] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold">
