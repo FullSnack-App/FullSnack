@@ -1,7 +1,6 @@
 function TogglerGroup({ categories, activeCategory, onchange, className = '' }) {
     return (
         <div className={`space-y-8 ${className}`}>
-            {/* Toggle Buttons */}
             <div className="flex flex-wrap gap-3 justify-center">
                 {categories.map((category) => (
                     <button
