@@ -19,7 +19,6 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
 
     return (
         <div className="card bg-base-100 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden">
-            {/* Image */}
             <figure>
                 <img
                     src={imagesUrl}
@@ -34,19 +33,16 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
                 <span className="text-sm font-medium text-gray-700">{rate}</span>
             </div>
 
-            {/* Offer Badge */}
             {offer && (
                 <div className="absolute left-3 top-3 bg-orange-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
                     -{offer.discountPercent}%
                 </div>
             )}
 
-            {/* Body */}
             <div className="card-body mt-5 p-5">
                 <h3 className="card-title text-lg mb-2">{name}</h3>
                 <p className="text-sm text-gray-600 mb-3">{description}</p>
 
-                {/* Price */}
                 <p className="text-xl text-orange-600 mb-3">
                     {offer ? (
                         <>
