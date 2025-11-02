@@ -119,12 +119,7 @@ function Menu() {
     return (
         <>
             <div
-                className="mx-auto px-4 py-16 w-full
-            sm:max-w-[540px]
-            md:max-w-[720px]
-            lg:max-w-[960px]
-            xl:max-w-[1140px]
-            2xl:max-w-[1320px]"
+                className="container"
             >
                 {/* Section Title */}
                 <div className="title text-center mb-12">
