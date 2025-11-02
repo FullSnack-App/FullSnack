@@ -35,7 +35,7 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
 
             {offer && (
                 <div className="absolute left-3 top-3 bg-orange-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
-                    -{offer.discountPercent}%
+                    -{offer.discountPercent}
                 </div>
             )}
 
