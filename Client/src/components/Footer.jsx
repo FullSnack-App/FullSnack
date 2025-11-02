@@ -1,7 +1,7 @@
-import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
-import { MdEmail, MdPhone } from "react-icons/md";
+import React from 'react';
+import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaLocationDot } from 'react-icons/fa6';
+import { MdEmail, MdPhone } from 'react-icons/md';
 
 export default function Footer() {
     return (
@@ -15,8 +15,7 @@ export default function Footer() {
                         <h2 className="text-white text-xl font-semibold">FullSnack</h2>
                     </div>
                     <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-                        Delivering happiness one meal at a time. Fresh ingredients, amazing
-                        flavors.
+                        Delivering happiness one meal at a time. Fresh ingredients, amazing flavors.
                     </p>
                     <div className="flex gap-4 text-gray-400">
                         <a href="#" className="hover:text-[#FF5722] transition">
@@ -33,9 +32,21 @@ export default function Footer() {
                 <div>
                     <h3 className="text-white font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" className="hover:text-[#FF5722]">About Us</a></li>
-                        <li><a href="#" className="hover:text-[#FF5722]">Menu</a></li>
-                        <li><a href="#" className="hover:text-[#FF5722]">Contact Us</a></li>
+                        <li>
+                            <a href="#" className="hover:text-[#FF5722]">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className="hover:text-[#FF5722]">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className="hover:text-[#FF5722]">
+                                Contact Us
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div>
