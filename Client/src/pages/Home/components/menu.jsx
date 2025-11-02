@@ -111,10 +111,9 @@ function Menu() {
     ];
 
     const categories = ['meal', 'drink', 'dessert'];
-    const [activeCategory, setActiveCategoris] = useState('meal');
+    const [activeCategory, setActiveCategories] = useState('meal');
     const updateCategory = (cat) => {
-        console.log(cat);
-        setActiveCategoris(cat);
+        setActiveCategories(cat);
     };
     return (
         <>
@@ -126,7 +125,6 @@ function Menu() {
             xl:max-w-[1140px]
             2xl:max-w-[1320px]"
             >
-                {/* Section Title */}
                 <div className="title text-center mb-12">
                     <h2 className="text-4xl font-bold mb-4">
                         Our <span className="text-orange-600">Menu</span>
@@ -137,7 +135,6 @@ function Menu() {
                     </p>
                 </div>
 
-                {/* Toggler Buttons */}
                 <TogglerGroup
                     categories={categories}
                     activeCategory={activeCategory}
@@ -145,7 +142,6 @@ function Menu() {
                     className="mb-10"
                 />
 
-                {/* Menu List */}
                 <MenuList
                     menulist={mealItems.filter((item) => item.category === activeCategory)}
                     className="mt-8"
