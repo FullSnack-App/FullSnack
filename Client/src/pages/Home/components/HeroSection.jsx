@@ -34,7 +34,7 @@ export default function HeroSection() {
                     <img
                         src={image1}
                         alt="Chef"
-                        className="w-[80%] md:w-[100%] lg:w-[100%] rounded-3xl shadow-lg object-cover"
+                        className="w-[80%] md:w-full lg:full rounded-3xl shadow-lg object-cover"
                     />
                 </div>
             </div>
