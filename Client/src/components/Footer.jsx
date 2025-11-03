@@ -6,7 +6,7 @@ import { MdEmail, MdPhone } from 'react-icons/md';
 export default function Footer() {
     return (
         <footer className="bg-[#0E1626] text-gray-300 px-8 md:px-20 py-12">
-            <div className="">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                         <div className="bg-[#FF5722] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold">
@@ -33,17 +33,17 @@ export default function Footer() {
                     <h3 className="text-white font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-gray-400 text-sm">
                         <li>
-                            <a href="#" className="hover:text-[#FF5722]">
+                            <a href="#" className="hover:text-[#FF5722] transition">
                                 About Us
                             </a>
                         </li>
                         <li>
-                            <a href="#" className="hover:text-[#FF5722]">
+                            <a href="#" className="hover:text-[#FF5722] transition">
                                 Menu
                             </a>
                         </li>
                         <li>
-                            <a href="#" className="hover:text-[#FF5722]">
+                            <a href="#" className="hover:text-[#FF5722] transition">
                                 Contact Us
                             </a>
                         </li>
@@ -67,8 +67,7 @@ export default function Footer() {
                     </ul>
                 </div>
             </div>
-
-            <div className="text-center text-gray-500 text-sm pt-6">
+            <div className="text-center text-gray-500 text-sm pt-10 border-t border-gray-700 mt-10">
                 © 2025 TasteHub. All rights reserved.
             </div>
         </footer>

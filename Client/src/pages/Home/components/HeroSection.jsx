@@ -1,42 +1,40 @@
 import React from 'react';
 import image1 from '../../../Chef.jfif';
+import ButtonComp from './../../../components/button';
 
 export default function HeroSection() {
     return (
-        <section className="flex h-screen flex-col-reverse md:flex-row items-center justify-between bg-[#FFF8EE] px-8 md:px-16 py-12 md:py-20 rounded-3xl shadow-sm">
-            {/* Left side (Text) */}
-            <div className="flex-1 text-left space-y-5">
-                <p className="inline-block bg-[#FFF0E0] text-[#FF5722] px-4 py-2 rounded-full font-medium text-sm shadow-sm">
-                    Free Delivery on Orders Over $30
-                </p>
+        <section className="bg-[#FFF8EE]  shadow-sm px-8 md:px-16 py-12 md:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+                <div className="order-2 md:order-1 space-y-5 text-center md:text-left">
+                    <p className="inline-block bg-[#FFF0E0] text-[#FF5722] px-4 py-2 rounded-full font-medium text-sm shadow-sm">
+                        Free Delivery on Orders Over $30
+                    </p>
 
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
-                    Delicious Food <br />
-                    <span className="text-[#FF5722]">Delivered to You</span>
-                </h1>
+                    <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+                        Delicious Food <br />
+                        <span className="text-[#FF5722]">Delivered to You</span>
+                    </h1>
 
-                <p className="text-gray-600 text-base md:text-lg max-w-md">
-                    Experience the finest cuisine from local restaurants. Fresh ingredients, amazing
-                    flavors, fast delivery.
-                </p>
+                    <p className="text-gray-600 text-base md:text-lg max-w-md mx-auto md:mx-0">
+                        Experience the finest cuisine from local restaurants. Fresh ingredients, amazing
+                        flavors, fast delivery.
+                    </p>
 
-                <div className="flex gap-4 pt-4">
-                    <button className="bg-[#FF5722] text-white px-6 py-3 rounded-lg text-sm md:text-base font-medium hover:bg-[#E64A19] transition">
-                        Order Now →
-                    </button>
-                    <button className="bg-white border border-gray-200 text-gray-700 px-6 py-3 rounded-lg text-sm md:text-base font-medium hover:bg-gray-100 transition">
-                        View Menu
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                        <ButtonComp className='bg-[#FF5722] text-white px-6 py-3 rounded-lg text-sm md:text-base font-medium hover:bg-[#E64A19] transition'>
+                            Order Now →
+                        </ButtonComp>
+                        <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm md:text-base font-medium hover:bg-gray-100 transition">
+                            View Menu
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            {/* Right side (Image) */}
-            <div className="flex-1 flex justify-center mb-8 md:mb-0">
-                <div className=" rounded-3xl">
+                <div className="order-1 md:order-2 flex justify-center">
                     <img
                         src={image1}
                         alt="Chef"
-                        className="w-[280px] shadow-lg md:w-[100%] rounded-2xl object-cover"
+                        className="w-[80%] md:w-[100%] lg:w-[100%] rounded-3xl shadow-lg object-cover"
                     />
                 </div>
             </div>

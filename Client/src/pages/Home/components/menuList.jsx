@@ -1,8 +1,7 @@
 import MenuItem from './MenuItem';
-import SkeletonMenuItem from '../../../components/SkeletonMenuItem';
+import SkeletonMenuItem from '../../../components/skeletonMenuItem';
 
 function MenuList({ menulist, className = '' }) {
-    console.log(menulist);
     return (
         <div
             className={`grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xlg:grid-cols-4 transition-all duration-300 ${className}`}
