@@ -117,9 +117,7 @@ function Menu() {
     };
     return (
         <>
-            <div
-                className="container"
-            >
+            <div className="container">
                 <div className="title text-center mb-12">
                     <h2 className="text-4xl font-bold mb-4">
                         Our <span className="text-orange-600">Menu</span>
