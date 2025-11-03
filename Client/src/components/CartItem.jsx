@@ -12,7 +12,7 @@ const CartItem = ({ id }) => {
             id,
             name: 'Sample Item',
             price: 10.0,
-            img: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXN0YSUyMGRpc2h8ZW58MXx8fHwxNzYxNTc4MjY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+            img: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXN0YSUyMGRpc2h8ZW58MXx8fHwxNzYxNTc4MjY4fDA&ixdivb=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
         };
     };
 
@@ -27,7 +27,7 @@ const CartItem = ({ id }) => {
     const itemDetails = getItemDetails(id);
 
     return (
-        <li className="flex items-center space-x-4 bg-gray-100 p-4 rounded-lg gap-2 h-full">
+        <div className="flex items-center space-x-4 bg-gray-100 p-4 rounded-lg gap-2 ">
             <div className="h-20 w-20 shrink-0">
                 <img
                     src={itemDetails.img}
@@ -38,23 +38,26 @@ const CartItem = ({ id }) => {
             <div className="flex-1 gap-2">
                 <h3 className="text-lg font-semibold">{itemDetails.name}</h3>
                 <p className="text-gray-600">${itemDetails.price.toFixed(2)}</p>
-                <div className="flex items-center space-x-2 gap-2">
-                    <SmallButton
-                        onClick={removeItemFromCart}
-                        className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
-                    >
-                        -
-                    </SmallButton>
-                    <span className="text-gray-800 font-medium">{itemCount}</span>
-                    <SmallButton
-                        onClick={addItemToCart}
-                        className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
-                    >
-                        +
-                    </SmallButton>
+                <div>
+                    <div className="flex items-center space-x-2 gap-2">
+                        <SmallButton
+                            onCdivck={removeItemFromCart}
+                            className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
+                        >
+                            -
+                        </SmallButton>
+                        <span className="text-gray-800 font-medium">{itemCount}</span>
+                        <SmallButton
+                            onCdivck={addItemToCart}
+                            className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
+                        >
+                            +
+                        </SmallButton>
+                    </div>
+                    <div className="flex items-center space-x-2"></div>
                 </div>
             </div>
-        </li>
+        </div>
     );
 };
 
