@@ -1,8 +1,13 @@
-import React from "react";
-import Sidebar from "../../components/Sidebar";
-
+import React from 'react';
+import HeroSection from './components/HeroSection';
+import Menu from './components/Menu';
 const Home = () => {
-  return <div></div>;
+    return (
+        <>
+            <HeroSection />
+            <Menu />
+        </>
+    );
 };
 
 export default Home;
