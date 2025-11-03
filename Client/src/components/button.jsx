@@ -1,4 +1,4 @@
-function ButtonComp({ className = '', children, ...props }) {
+function Button({ className = '', children, ...props }) {
     return (
         <>
             <button
@@ -11,4 +11,4 @@ function ButtonComp({ className = '', children, ...props }) {
     );
 }
 
-export default ButtonComp;
+export default Button;

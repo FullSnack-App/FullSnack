@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CartItem from './CartItem';
-import ButtonComp from './button';
+import Button from './Button';
 import { Link } from 'react-router';
 
 const CartSidebar = ({
@@ -121,7 +121,7 @@ const CartSidebar = ({
                             </div>
 
                             <Link to="/checkout" onClick={closeCart}>
-                                <ButtonComp className="w-full">Proceed to Checkout</ButtonComp>
+                                <Button className="w-full">Proceed to Checkout</Button>
                             </Link>
                         </div>
                     )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import image1 from '../../../Chef.jfif';
-import ButtonComp from './../../../components/button';
+import Button from '../../../components/Button';
 
 export default function HeroSection() {
     return (
@@ -17,14 +17,14 @@ export default function HeroSection() {
                     </h1>
 
                     <p className="text-gray-600 text-base md:text-lg max-w-md mx-auto md:mx-0">
-                        Experience the finest cuisine from local restaurants. Fresh ingredients, amazing
-                        flavors, fast delivery.
+                        Experience the finest cuisine from local restaurants. Fresh ingredients,
+                        amazing flavors, fast delivery.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
-                        <ButtonComp className='bg-[#FF5722] text-white px-6 py-3 rounded-lg text-sm md:text-base font-medium hover:bg-[#E64A19] transition'>
+                        <Button className="bg-[#FF5722] text-white px-6 py-3 rounded-lg text-sm md:text-base font-medium hover:bg-[#E64A19] transition">
                             Order Now →
-                        </ButtonComp>
+                        </Button>
                         <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm md:text-base font-medium hover:bg-gray-100 transition">
                             View Menu
                         </button>

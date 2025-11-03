@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-import ButtonComp from '../../../components/button';
+import Button from '../../../components/Button';
 
 function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
     const discountedPrice = offer?.priceAfterDiscount ?? null;
@@ -76,12 +76,12 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
                     </div>
 
                     {/* Add to Cart Button */}
-                    <ButtonComp
+                    <Button
                         className="w-full rounded-xl flex items-center justify-center gap-2"
                         onClick={handleAddToCart}
                     >
-                        <ShoppingCart size={18} />  Add to Cart
-                    </ButtonComp>
+                        <ShoppingCart size={18} /> Add to Cart
+                    </Button>
                 </div>
             </div>
         </div>
