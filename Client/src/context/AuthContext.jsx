@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }) => {
                 email,
                 password,
             });
+            console.log('Login response at src/context/authContext.jsx: ', response);
 
             const data = response.data;
 
@@ -101,13 +102,18 @@ export const AuthProvider = ({ children }) => {
 
             return { success: true, data };
         } catch (error) {
+            const backendError =
+                error.response?.data?.err_msg ||
+                error.response?.data?.message ||
+                error.message ||
+                'Login failed';
+
             dispatch({
                 type: AUTH_ACTIONS.LOGIN_FAILURE,
-                payload: {
-                    error: error.response?.data?.message || error.message || 'Login failed',
-                },
+                payload: { error: backendError },
             });
-            return { success: false, error: error.response?.data?.message || error.message };
+
+            return { success: false, error: backendError };
         }
     };
 
@@ -115,6 +121,16 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
         localStorage.removeItem('userToken');
         localStorage.removeItem('user');
+    };
+
+    const register = async (userData) => {
+        try {
+            const response = await apiClient.post('/user/register', userData);
+            const data = response.data;
+            return { success: true, data };
+        } catch (error) {
+            return { success: false, error: error.response?.data?.message || error.message };
+        }
     };
 
     const setUser = (user) => {
@@ -129,6 +145,7 @@ export const AuthProvider = ({ children }) => {
         ...state,
         login,
         logout,
+        register,
         setUser,
     };
 
