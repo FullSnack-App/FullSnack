@@ -4,7 +4,7 @@ import Button from '../../../components/Button';
 
 export default function HeroSection() {
     return (
-        <section className="bg-[#FFF8EE]  shadow-sm px-8 md:px-16 py-12 md:py-20">
+        <section className="bg-white  shadow-sm px-8 md:px-16 py-12 md:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
                 <div className="order-2 md:order-1 space-y-5 text-center md:text-left">
                     <p className="inline-block bg-[#FFF0E0] text-[#FF5722] px-4 py-2 rounded-full font-medium text-sm shadow-sm">
@@ -34,7 +34,7 @@ export default function HeroSection() {
                     <img
                         src={image1}
                         alt="Chef"
-                        className="w-[80%] md:w-[100%] lg:w-[100%] rounded-3xl shadow-lg object-cover"
+                        className="w-[80%] md:w-full lg:w-full rounded-3xl shadow-lg object-cover"
                     />
                 </div>
             </div>

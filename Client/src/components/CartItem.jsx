@@ -3,11 +3,9 @@ import SmallButton from './SmallButton';
 
 const CartItem = ({ id }) => {
     const getItemCount = () => {
-        // Logic to get the item count from cart context
-        return 1; // Placeholder
+        return 1;
     };
     const getItemDetails = (id) => {
-        // Logic to get item details from products context
         return {
             id,
             name: 'Sample Item',
@@ -16,12 +14,8 @@ const CartItem = ({ id }) => {
         };
     };
 
-    const addItemToCart = () => {
-        // logic to increment item quantity in cart context
-    };
-    const removeItemFromCart = () => {
-        // logic to decrement item quantity in cart context
-    };
+    const addItemToCart = () => {};
+    const removeItemFromCart = () => {};
 
     const itemCount = getItemCount();
     const itemDetails = getItemDetails(id);
@@ -41,14 +35,14 @@ const CartItem = ({ id }) => {
                 <div>
                     <div className="flex items-center space-x-2 gap-2">
                         <SmallButton
-                            onCdivck={removeItemFromCart}
+                            onClick={removeItemFromCart}
                             className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
                         >
                             -
                         </SmallButton>
                         <span className="text-gray-800 font-medium">{itemCount}</span>
                         <SmallButton
-                            onCdivck={addItemToCart}
+                            onClick={addItemToCart}
                             className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
                         >
                             +

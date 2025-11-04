@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import CartItem from './CartItem';
 import Button from './Button';
 import { Link } from 'react-router';

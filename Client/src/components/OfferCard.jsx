@@ -19,7 +19,7 @@ function OfferCard({ offer, onClick }) {
                         {offer.discountPercent}% OFF
                     </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white z-10">
                     <h2 className="text-3xl font-bold mb-2">{offer.title}</h2>
                     <p className="text-gray-200 text-sm">{offer.description}</p>
