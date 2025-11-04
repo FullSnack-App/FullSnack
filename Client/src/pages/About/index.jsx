@@ -5,9 +5,9 @@ import { Link } from "react-router";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-base-100 text-base-content mt-5">
+    <div className="min-h-screen bg-base-100 text-base-content">
       {/* Header Section */}
-      <section className="text-center py-16 bg-gradient-to-b from-primary/20 to-base-100">
+      <section className="text-center py-25 bg-gradient-to-b from-primary/20 to-base-100">
         <h1 className="text-5xl font-bold mb-4">About Our Restaurant</h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Experience the art of fine dining with a modern twist — where every
