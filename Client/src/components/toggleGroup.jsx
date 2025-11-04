@@ -7,7 +7,7 @@ function TogglerGroup({ categories, activeCategory, onchange, className = '' }) 
                         key={category}
                         value={category}
                         onClick={() => onchange(category)}
-                        className={`px-4 py-2 rounded-full border transition-all duration-200
+                        className={`px-4 py-2 rounded-full border transition-all duration-200 capitalize
                         ${
                             activeCategory === category
                                 ? 'bg-orange-600 text-white border-orange-600'
