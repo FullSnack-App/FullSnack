@@ -8,7 +8,7 @@ import SmallButton from './SmallButton';
 const Navbar = () => {
     const [isCartOpen, setIsCartOpen] = React.useState(false);
     const navClasses = clsx(
-        'fixed',
+        'sticky',
         'top-0',
         'left-0',
         'w-full',
@@ -60,7 +60,6 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div>
             <div className={navClasses} onClick={isCartOpen ? closeCart : undefined}>
                 <div className="absolute">
                     <CartSidebar isOpen={isCartOpen} closeCart={closeCart} />
@@ -171,7 +170,7 @@ const Navbar = () => {
                     </SmallButton>
                 </div>
             </div>
-        </div>
+        
     );
 };
 
