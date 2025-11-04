@@ -10,10 +10,9 @@ import Offer from '../pages/Offer';
 import AdminMenuItem from '../pages/Admin/components/AdminMenuItem';
 import AdminOffers from '../pages/Admin/components/AdminOffers';
 import AdminDashboard from '../pages/Admin/Dashboard';
-import Login from '../pages/Login';
 import { ROUTES } from '../config/routes';
 import ProtectedRoute from '../components/ProtectedRoute';
-
+import Profile from '../pages/Profile';
 export const routes = (
     <Routes>
         <Route element={<MainLayout />}>
@@ -21,7 +20,15 @@ export const routes = (
             <Route path={ROUTES.OFFER} element={<Offer />} />
             <Route path={ROUTES.CONTACT} element={<Contact />} />
             <Route path={ROUTES.ABOUT} element={<About />} />
-            <Route path={ROUTES.LOGIN} element={<Login />} />
+
+            <Route
+                path={ROUTES.PROFILE}
+                element={
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                }
+            />
 
             <Route
                 path={ROUTES.CHECKOUT}
@@ -33,7 +40,6 @@ export const routes = (
             />
         </Route>
 
-        {/* Admin Routes - All Protected */}
         <Route
             path={ROUTES.ADMIN}
             element={
