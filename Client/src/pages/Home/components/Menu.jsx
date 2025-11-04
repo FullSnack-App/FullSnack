@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TogglerGroup from '../../../components/ToggleGroup';
+import TogglerGroup from '../../../components/TogglerGroup';
 import MenuList from './MenuList';
 
 function Menu() {
