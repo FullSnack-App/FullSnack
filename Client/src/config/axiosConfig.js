@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL || 'https://fullsnack.obl.ee',
-    timeout: 1000,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
         accept: '*/*',
@@ -40,7 +40,13 @@ apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-
+        console.log('error', error.response);
+        if (
+            originalRequest.url.includes('/user/login') ||
+            originalRequest.url.includes('/user/register')
+        ) {
+            return Promise.reject(error);
+        }
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
