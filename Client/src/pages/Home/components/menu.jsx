@@ -1,12 +1,11 @@
-import { useState, useContext, useMemo } from 'react';
-import { MenuContext } from '../../../context/menuContext';
+import { useState, useMemo } from 'react';
 import TogglerGroup from '../../../components/ToggleGroup';
 import MenuList from './MenuList';
+import { useMenu } from '../../../hooks/useMenu';
 
 function Menu() {
-    const { menuItems, loading } = useContext(MenuContext);
+    const { menuItems, loading } = useMenu();
     const [activeCategory, setActiveCategory] = useState('meal');
-
     // Automatically extract unique categories from the data
     const categories = useMemo(() => {
         const unique = new Set(menuItems.map((item) => item.category));

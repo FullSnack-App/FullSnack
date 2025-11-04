@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { MenuContext } from './menuContext';
+import { MenuContext } from './MenuContext';
 import apiClient from '../config/axiosConfig';
 
 export function MenuProvider({ children }) {
@@ -10,7 +10,7 @@ export function MenuProvider({ children }) {
         const fetchProducts = async () => {
             try {
                 const response = await apiClient.get('/menu-items');
-                setMenuItems(response.data);
+                setMenuItems(response.data.items);
             } catch (error) {
                 console.error('Failed to fetch menu items:', error);
             } finally {
