@@ -40,7 +40,6 @@ apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        console.log('error', error.response);
         if (
             originalRequest.url.includes('/user/login') ||
             originalRequest.url.includes('/user/register')

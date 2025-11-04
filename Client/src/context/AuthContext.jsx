@@ -88,7 +88,6 @@ export const AuthProvider = ({ children }) => {
                 email,
                 password,
             });
-            console.log('Login response at src/context/authContext.jsx: ', response);
 
             const data = response.data;
 

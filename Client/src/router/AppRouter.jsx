@@ -1,8 +1,7 @@
-import { Routes, Route, Navigate } from 'react-router';
+import { Routes, Route } from 'react-router';
 import MainLayout from '../layouts/MainLayout';
 import Admin from '../layouts/Admin';
 import Home from '../pages/Home';
-import Menu from '../pages/Menu';
 import Contact from '../pages/Contact';
 import Checkout from '../pages/checkout';
 import About from '../pages/About';
