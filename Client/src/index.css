@@ -9,7 +9,7 @@
         box-sizing: border-box;
     }
     body {
-        --color-primary: oklch(70% 0.21 60);
+        --color-primary: var(--color-orange-600);
         --color-primary-content: oklch(98% 0.01 250);
         --color-secondary: oklch(65% 0.24 354.3);
         --color-secondary-content: white;
@@ -50,4 +50,15 @@
         xl:max-w-[1140px]
         2xl:max-w-[1320px];
     }
+}
+
+input:-webkit-autofill {
+    background-color: #f3f4f6 !important; /* same as bg-gray-100 */
+    -webkit-text-fill-color: #000 !important; /* text-black */
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+input:-webkit-autofill:focus {
+    background-color: #f3f4f6 !important;
+    -webkit-text-fill-color: #000 !important;
 }
