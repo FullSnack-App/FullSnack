@@ -3,7 +3,7 @@ import { Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../../../components/Button';
 
-function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
+function MenuItem({ name, description, price, imageUrl, rate, offer }) {
     const discountedPrice = offer?.priceAfterDiscount ?? null;
     const [quantity, setQuantity] = useState(1);
 
@@ -21,7 +21,7 @@ function MenuItem({ name, description, price, imagesUrl, rate, offer }) {
         <div className="card bg-base-100 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden">
             <figure>
                 <img
-                    src={imagesUrl}
+                    src={imageUrl}
                     alt={name}
                     className="object-cover w-full h-48 transition-transform duration-300 hover:scale-105"
                 />
