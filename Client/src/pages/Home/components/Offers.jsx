@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -6,11 +5,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './offers.css';
 import OfferCard from '../../../components/OfferCard';
-import { OffersContext } from '../../../context/offersContext';
 import OfferCardSkeleton from '../../../components/OfferCardSkeleton';
+import { useOffer } from '../../../hooks/useOffer';
 
 const Offers = () => {
-    const { offers, loading } = useContext(OffersContext) // get offers from context
+    const { offers, loading } = useOffer()
 
     return (
         <div className="container mx-auto px-4">

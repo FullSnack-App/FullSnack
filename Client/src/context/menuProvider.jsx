@@ -1,6 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
-import { MenuContext } from './MenuContext';
+import { useEffect, useState, useCallback, createContext } from 'react';
 import apiClient from '../config/axiosConfig';
+
+
+export const MenuContext = createContext();
 
 export function MenuProvider({ children }) {
     const [menuItems, setMenuItems] = useState([]);
@@ -27,7 +29,7 @@ export function MenuProvider({ children }) {
     );
 
     return (
-        <MenuContext.Provider value={{ menuItems, loading, getMenuItemById }}>
+        <MenuContext.Provider value={{ menuItems, loading, getMenuItemById, setLoading, setMenuItems }}>
             {children}
         </MenuContext.Provider>
     );
