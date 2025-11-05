@@ -13,7 +13,7 @@ const Offers = () => {
     const { offers, loading } = useContext(OffersContext) // get offers from context
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container">
             {/* Section Title */}
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4">

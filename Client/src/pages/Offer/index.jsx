@@ -46,7 +46,7 @@ function Offer() {
         })) || [];
 
     return (
-        <section className="py-10 px-4 max-w-6xl mx-auto">
+        <section className="container">
             {/* Offer Hero */}
             <OfferCard offer={offer} onClick={() => {}} />
 
