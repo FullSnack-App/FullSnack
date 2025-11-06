@@ -8,7 +8,6 @@ export const useAuthForm = (closeAuth) => {
         password: '',
         fullName: '',
         repeatPassword: '',
-        gender: '',
         age: '',
         phone: '',
     });

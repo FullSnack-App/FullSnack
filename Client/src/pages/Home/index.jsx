@@ -9,7 +9,7 @@ const Home = () => {
             <div className="h-10 bg-linear-to-b from-orange-50 to-white" />
             <Offers></Offers>
             <div className="h-10 bg-linear-to-b from-white to-orange-50" />
-            <section className="bg-linear-to-b from-orange-50 to-white">
+            <section id="menu" className="bg-linear-to-b from-orange-50 to-white">
                 <Menu />
             </section>
         </>

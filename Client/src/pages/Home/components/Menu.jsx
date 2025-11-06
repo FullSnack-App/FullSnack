@@ -5,6 +5,7 @@ import { useMenu } from '../../../hooks/useMenu';
 
 function Menu() {
     const { menuItems, loading } = useMenu();
+    console.log(menuItems);
     const [activeCategory, setActiveCategory] = useState('meal');
     // Automatically extract unique categories from the data
     const categories = useMemo(() => {

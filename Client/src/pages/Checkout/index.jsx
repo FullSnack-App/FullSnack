@@ -1,47 +1,32 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import apiClient from '../../config/axiosConfig';
+import toast from 'react-hot-toast';
 
 const Checkout = () => {
-    // 🛒 Cart Data
-    const items = [
-        {
-            menuItem: {
-                _id: '6907151a4fd965cbdf027d75',
-                name: 'Fresh Orange Juice',
-                description: 'Freshly squeezed orange juice',
-                price: 40,
-                category: 'drink',
-                rate: 4.6,
-                imageUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349',
-            },
-            quantity: 4,
-            _id: '690a7111f07a4eedc9d44fd4',
-            discountApplied: 15,
-            originalPrice: 40,
-            priceAtAddition: 34,
-        },
-        {
-            menuItem: {
-                _id: '6907150e4fd965cbdf027d72',
-                name: 'Chocolate Cake',
-                description: 'Rich chocolate cake with fudge topping',
-                price: 80,
-                category: 'dessert',
-                rate: 4.8,
-                imageUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349',
-            },
-            quantity: 3,
-            priceAtAddition: 72,
-            originalPrice: 80,
-            discountApplied: 10,
-            _id: '690af34a793a8b12e1fbfb2a',
-        },
-    ];
+    // 🛒 Cart Data from backend
+    const [items, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // 🧾 Flatten
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const response = await apiClient.get('/cart');
+                console.log(response.data.cart.items);
+                setCartItems(response.data.cart.items || []);
+            } catch (error) {
+                console.error('❌ Failed to fetch cart:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCart();
+    }, []);
+
+    // 🧾 Flatten cart items for rendering
     const detailedCartItems = useMemo(
         () =>
-            items.map((item) => ({
+            (items || []).map((item) => ({
                 ...item.menuItem,
                 quantity: item.quantity,
                 discountApplied: item.discountApplied,
@@ -67,25 +52,44 @@ const Checkout = () => {
         register,
         handleSubmit,
         formState: { errors },
-        watch,
     } = useForm({
         defaultValues: {
-            fullName: '',
-            email: '',
-            address: '',
-            phone: '',
+            customerFullName: '',
+            customerEmail: '',
+            deliveryAddress: '',
+            phoneNumber: '',
             paymentMethod: 'cash',
         },
     });
 
-    const onSubmit = (data) => {
-        console.log('✅ Order placed:', {
-            customer: data,
-            detailedCartItems,
-        });
+    const onSubmit = async (data) => {
+        const loadingToast = toast.loading('Processing your order...');
+        try {
+            const response = await apiClient.post('orders/checkout', {
+                ...data,
+            });
+            toast.dismiss(loadingToast);
+
+            if (response.data.checkoutUrl) {
+                toast.loading('Redirecting to Stripe checkout...');
+
+                window.location.href = response.data.checkoutUrl;
+            } else {
+                toast.success('Order placed successfully!');
+                setTimeout(() => {
+                    window.location.href = `/order-success/${response.data.order._id}`;
+                }, 500);
+            }
+        } catch (error) {
+            toast.dismiss(loadingToast);
+            toast.error('Checkout failed. Please try again.');
+            console.error('❌ Checkout failed:', error);
+        }
     };
 
-    const selectedPayment = watch('paymentMethod');
+    if (loading) return <div className="text-center py-20">Loading your cart...</div>;
+    if (items.length === 0)
+        return <div className="text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
@@ -104,30 +108,28 @@ const Checkout = () => {
                                 Customer Information
                             </h3>
                             <div className="grid md:grid-cols-2 gap-6">
-                                {/* Full Name */}
                                 <div>
                                     <label className="label font-medium text-gray-600">
                                         Full Name
                                     </label>
                                     <input
-                                        {...register('fullName', {
+                                        {...register('customerFullName', {
                                             required: 'Full name is required',
                                         })}
                                         className="input input-bordered w-full"
                                         placeholder="Enter your full name"
                                     />
-                                    {errors.fullName && (
+                                    {errors.customerFullName && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            {errors.fullName.message}
+                                            {errors.customerFullName.message}
                                         </p>
                                     )}
                                 </div>
 
-                                {/* Email */}
                                 <div>
                                     <label className="label font-medium text-gray-600">Email</label>
                                     <input
-                                        {...register('email', {
+                                        {...register('customerEmail', {
                                             required: 'Email is required',
                                             pattern: {
                                                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -137,9 +139,9 @@ const Checkout = () => {
                                         className="input input-bordered w-full"
                                         placeholder="you@example.com"
                                     />
-                                    {errors.email && (
+                                    {errors.customerEmail && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            {errors.email.message}
+                                            {errors.customerEmail.message}
                                         </p>
                                     )}
                                 </div>
@@ -151,31 +153,30 @@ const Checkout = () => {
                             <h3 className="text-2xl font-semibold text-orange-600">
                                 Delivery Details
                             </h3>
-
-                            {/* Address */}
                             <div>
                                 <label className="label font-medium text-gray-600">
                                     Delivery Address
                                 </label>
                                 <input
-                                    {...register('address', { required: 'Address is required' })}
+                                    {...register('deliveryAddress', {
+                                        required: 'Address is required',
+                                    })}
                                     className="input input-bordered w-full"
                                     placeholder="Enter your delivery address"
                                 />
-                                {errors.address && (
+                                {errors.deliveryAddress && (
                                     <p className="text-red-500 text-sm mt-1">
-                                        {errors.address.message}
+                                        {errors.deliveryAddress.message}
                                     </p>
                                 )}
                             </div>
 
-                            {/* Phone */}
                             <div>
                                 <label className="label font-medium text-gray-600">
                                     Phone Number
                                 </label>
                                 <input
-                                    {...register('phone', {
+                                    {...register('phoneNumber', {
                                         required: 'Phone number is required',
                                         pattern: {
                                             value: /^[0-9]{10,15}$/,
@@ -185,9 +186,9 @@ const Checkout = () => {
                                     className="input input-bordered w-full"
                                     placeholder="e.g. 01012345678"
                                 />
-                                {errors.phone && (
+                                {errors.phoneNumber && (
                                     <p className="text-red-500 text-sm mt-1">
-                                        {errors.phone.message}
+                                        {errors.phoneNumber.message}
                                     </p>
                                 )}
                             </div>
@@ -229,48 +230,76 @@ const Checkout = () => {
                         </h3>
 
                         <ul className="divide-y divide-gray-200 mb-6">
-                            {detailedCartItems.map((item) => (
-                                <li key={item._id} className="flex gap-4 py-4 items-center">
-                                    <img
-                                        src={item.imageUrl}
-                                        alt={item.name}
-                                        className="w-16 h-16 object-cover rounded-lg"
-                                    />
-                                    <div className="flex-1">
-                                        <h4 className="font-medium text-gray-800">{item.name}</h4>
-                                        <p className="text-sm text-gray-500">
-                                            Qty: {item.quantity}
-                                        </p>
-                                        <div className="text-sm mt-1">
-                                            <span className="line-through text-gray-400 mr-2">
-                                                ${item.originalPrice.toFixed(2)}
-                                            </span>
-                                            <span className="text-orange-600 font-semibold">
-                                                ${item.priceAtAddition.toFixed(2)}
-                                            </span>
-                                            <span className="ml-2 text-green-600 font-medium">
-                                                ({item.discountApplied}% OFF)
-                                            </span>
+                            {detailedCartItems.map((item) => {
+                                const hasDiscount =
+                                    item.discountApplied &&
+                                    item.discountApplied > 0 &&
+                                    item.priceAtAddition < item.originalPrice;
+
+                                return (
+                                    <li key={item._id} className="flex gap-4 py-4 items-center">
+                                        <img
+                                            src={item.imageUrl}
+                                            alt={item.name}
+                                            className="w-16 h-16 object-cover rounded-lg"
+                                        />
+                                        <div className="flex-1">
+                                            <h4 className="font-medium text-gray-800">
+                                                {item.name}
+                                            </h4>
+                                            <p className="text-sm text-gray-500">
+                                                Qty: {item.quantity}
+                                            </p>
+
+                                            <div className="text-sm mt-1">
+                                                {hasDiscount ? (
+                                                    <>
+                                                        <span className="line-through text-gray-400 mr-2">
+                                                            ${item.originalPrice.toFixed(2)}
+                                                        </span>
+                                                        <span className="text-orange-600 font-semibold">
+                                                            ${item.priceAtAddition.toFixed(2)}
+                                                        </span>
+                                                        <span className="ml-2 text-green-600 font-medium">
+                                                            ({item.discountApplied}% OFF)
+                                                        </span>
+                                                    </>
+                                                ) : (
+                                                    <span className="text-gray-800 font-semibold">
+                                                        ${item.priceAtAddition.toFixed(2)}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
+                                    </li>
+                                );
+                            })}
                         </ul>
 
                         <hr className="my-4" />
                         <div className="space-y-2 text-lg font-semibold">
-                            <div className="flex justify-between text-gray-600">
-                                <span>Total before discount</span>
-                                <span>${totalBeforeDiscount.toFixed(2)}</span>
-                            </div>
-                            <div className="flex justify-between text-orange-600">
-                                <span>Total after discount</span>
+                            {totalSaved > 0 && (
+                                <div className="flex justify-between text-gray-600">
+                                    <span>Total before discount</span>
+                                    <span>${totalBeforeDiscount.toFixed(2)}</span>
+                                </div>
+                            )}
+
+                            <div
+                                className={`flex justify-between ${
+                                    totalSaved > 0 ? 'text-orange-600' : 'text-gray-800'
+                                }`}
+                            >
+                                <span>Total</span>
                                 <span>${totalAfterDiscount.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-green-600">
-                                <span>You saved</span>
-                                <span>-${totalSaved.toFixed(2)}</span>
-                            </div>
+
+                            {totalSaved > 0 && (
+                                <div className="flex justify-between text-green-600">
+                                    <span>You saved</span>
+                                    <span>-${totalSaved.toFixed(2)}</span>
+                                </div>
+                            )}
                         </div>
 
                         <button

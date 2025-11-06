@@ -4,6 +4,8 @@ export const ROUTES = {
     PROFILE: '/profile',
     CONTACT: '/contact',
     CHECKOUT: '/checkout',
+    ORDER_SUCCESS: '/order-success/:orderId',
+    ORDER_CANCEL: '/order-cancel',
     OFFER: '/offer/:id',
     ADMIN: '/admin',
     ADMIN_MENU: '/admin/menu',
