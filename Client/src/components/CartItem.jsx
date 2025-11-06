@@ -1,52 +1,65 @@
 import React from 'react';
 import SmallButton from './SmallButton';
+import { useCart } from '../hooks/useCart';
 
-const CartItem = ({ id }) => {
-    const getItemCount = () => {
-        return 1;
+const CartItem = ({ menuItemId, quantity, priceAtAddition, menuItemDetails }) => {
+    const { updateCartItem, removeFromCart } = useCart();
+
+    // Use menuItemDetails if available (from localStorage), otherwise use defaults
+    const itemName = menuItemDetails?.name || 'Menu Item';
+    const itemPrice = priceAtAddition || menuItemDetails?.price || 0;
+    const itemImage =
+        menuItemDetails?.imageUrl || menuItemDetails?.img || 'https://via.placeholder.com/150';
+
+    const handleIncrement = () => {
+        updateCartItem(menuItemId, quantity + 1);
     };
-    const getItemDetails = (id) => {
-        return {
-            id,
-            name: 'Sample Item',
-            price: 10.0,
-            img: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXN0YSUyMGRpc2h8ZW58MXx8fHwxNzYxNTc4MjY4fDA&ixdivb=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            updateCartItem(menuItemId, quantity - 1);
+        } else {
+            removeFromCart(menuItemId);
+        }
     };
 
-    const addItemToCart = () => {};
-    const removeItemFromCart = () => {};
-
-    const itemCount = getItemCount();
-    const itemDetails = getItemDetails(id);
+    const handleRemove = () => {
+        removeFromCart(menuItemId);
+    };
 
     return (
-        <div className="flex items-center space-x-4 bg-gray-100 p-4 rounded-lg gap-2 ">
+        <div className="flex items-center space-x-4 bg-gray-100 p-4 rounded-lg gap-2">
             <div className="h-20 w-20 shrink-0">
                 <img
-                    src={itemDetails.img}
-                    alt={itemDetails.name}
-                    className="object-cover rounded-md h-full"
+                    src={itemImage}
+                    alt={itemName}
+                    className="object-cover rounded-md h-full w-full"
                 />
             </div>
             <div className="flex-1 gap-2">
-                <h3 className="text-lg font-semibold">{itemDetails.name}</h3>
-                <p className="text-gray-600">${itemDetails.price.toFixed(2)}</p>
+                <h3 className="text-lg font-semibold">{itemName}</h3>
+                <p className="text-gray-600">${itemPrice.toFixed(2)}</p>
                 <div>
                     <div className="flex items-center space-x-2 gap-2">
                         <SmallButton
-                            onClick={removeItemFromCart}
+                            onClick={handleDecrement}
                             className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
                         >
                             -
                         </SmallButton>
-                        <span className="text-gray-800 font-medium">{itemCount}</span>
+                        <span className="text-gray-800 font-medium">{quantity}</span>
                         <SmallButton
-                            onClick={addItemToCart}
+                            onClick={handleIncrement}
                             className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
                         >
                             +
                         </SmallButton>
+                        <button
+                            onClick={handleRemove}
+                            className="ml-2 text-red-500 hover:text-red-700 text-sm"
+                        >
+                            Remove
+                        </button>
                     </div>
                     <div className="flex items-center space-x-2"></div>
                 </div>

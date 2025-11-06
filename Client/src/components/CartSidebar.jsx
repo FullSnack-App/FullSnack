@@ -1,32 +1,13 @@
 import CartItem from './CartItem';
 import Button from './Button';
 import { Link } from 'react-router';
+import { useCart } from '../hooks/useCart';
 
-const CartSidebar = ({
-    isOpen,
-    closeCart,
-    items = [
-        {
-            id: 1,
-        },
-        {
-            id: 2,
-        },
-        {
-            id: 3,
-        },
-    ],
-    calculateSubtotal,
-    calculateDeliveryFee,
-}) => {
-    const subtotal = calculateSubtotal
-        ? calculateSubtotal(items)
-        : items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const deliveryFee = calculateDeliveryFee
-        ? calculateDeliveryFee(subtotal)
-        : subtotal > 50
-        ? 0
-        : 5.0;
+const CartSidebar = ({ isOpen, closeCart }) => {
+    const { items, getSubtotal } = useCart();
+
+    const subtotal = getSubtotal();
+    const deliveryFee = subtotal > 50 ? 0 : 5.0;
     const total = subtotal + deliveryFee;
 
     return (
@@ -88,7 +69,7 @@ const CartSidebar = ({
                         ) : (
                             <ul className="space-y-3">
                                 {items.map((item) => (
-                                    <CartItem key={item.id} {...item} />
+                                    <CartItem key={item.menuItemId} {...item} />
                                 ))}
                             </ul>
                         )}

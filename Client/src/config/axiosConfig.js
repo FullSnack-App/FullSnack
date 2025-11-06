@@ -7,6 +7,7 @@ const apiClient = axios.create({
         'Content-Type': 'application/json',
         accept: '*/*',
     },
+    withCredentials: true,
 });
 
 let isRefreshing = false;
