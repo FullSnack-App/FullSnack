@@ -19,12 +19,20 @@ export async function toggleActivateItem(id, menuItems, setMenuItems) {
 }
 export async function addMenuItem(itemData) {
     try {
-        const data = await apiClient.post("/menu-items", {
-            body: JSON.stringify(itemData)
-        });
-        return await data.json();
+        const response = await apiClient.post("/menu-items", itemData);
+        return response.data
     } catch (error) {
-        console.error("Serve Error")
+        console.error("Server Error:", error.response?.data || error.message);
+        throw error;
     }
+}
 
+export async function updateMenuItem(id, updatedData) {
+  try {
+    const response = await apiClient.put(`/menu-items/${id}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating item:", error);
+    throw error;
+  }
 }

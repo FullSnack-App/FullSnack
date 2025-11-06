@@ -29,7 +29,7 @@ export function OffersProvider({ children }) {
 
     return (
         <offersContext.Provider
-            value={{ offers, loading, getOfferById }}
+            value={{ offers, loading, getOfferById , setOffers }}
         >
             {children}
         </offersContext.Provider>

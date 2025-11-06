@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import TogglerGroup from '../../../components/ToggleGroup';
 import MenuList from './MenuList';
 import { useMenu } from '../../../hooks/useMenu';
+import TogglerGroup from './../../../components/TogglerGroup';
 
 function Menu() {
     const { menuItems, loading } = useMenu();

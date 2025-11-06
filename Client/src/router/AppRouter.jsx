@@ -7,9 +7,10 @@ import Contact from '../pages/Contact';
 import Checkout from '../pages/checkout';
 import About from '../pages/About';
 import Offer from '../pages/Offer';
-import AdminMenuItem from '../pages/Admin/components/AdminMenuItem';
-import AdminOffers from '../pages/Admin/components/AdminOffers';
-import AdminDashboard from '../pages/Admin/Dashboard';
+import AdminDashboard from './../pages/Admin/Dashboard';
+import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuItem';
+import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
+import AdminLayout from '../layouts/Admin';
 
 export const routes = (
     <Routes>
@@ -21,7 +22,7 @@ export const routes = (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/about" element={<About />} />
         </Route>
-        <Route path="/admin" element={<Admin />}>
+        <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="menu" element={<AdminMenuItem />} />
             <Route path="offers" element={<AdminOffers />} />
