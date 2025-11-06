@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router';
 import MainLayout from '../layouts/MainLayout';
-import Admin from '../layouts/Admin';
 import Home from '../pages/Home';
 import Contact from '../pages/Contact';
 import Checkout from '../pages/checkout';
@@ -9,11 +8,11 @@ import Offer from '../pages/Offer';
 import AdminDashboard from './../pages/Admin/Dashboard';
 import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuItem';
 import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
-import AdminLayout from '../layouts/Admin';
 
 import { ROUTES } from '../config/routes';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Profile from '../pages/Profile';
+import AdminLayout from './../layouts/Admin';
 export const routes = (
     <Routes>
         <Route element={<MainLayout />}>
@@ -45,7 +44,7 @@ export const routes = (
             path={ROUTES.ADMIN}
             element={
                 <ProtectedRoute>
-                    <Admin />
+                    <AdminLayout />
                 </ProtectedRoute>
             }
         >
