@@ -6,9 +6,11 @@ import Contact from '../pages/Contact';
 import Checkout from '../pages/checkout';
 import About from '../pages/About';
 import Offer from '../pages/Offer';
-import AdminMenuItem from '../pages/Admin/components/AdminMenuItem';
-import AdminOffers from '../pages/Admin/components/AdminOffers';
-import AdminDashboard from '../pages/Admin/Dashboard';
+import AdminDashboard from './../pages/Admin/Dashboard';
+import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuItem';
+import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
+import AdminLayout from '../layouts/Admin';
+
 import { ROUTES } from '../config/routes';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Profile from '../pages/Profile';

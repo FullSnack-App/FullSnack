@@ -2,22 +2,23 @@ import { useState, useMemo } from 'react';
 import TogglerGroup from '../../../components/TogglerGroup';
 import MenuList from './MenuList';
 import { useMenu } from '../../../hooks/useMenu';
+import TogglerGroup from './../../../components/TogglerGroup';
 
 function Menu() {
-    const { menuItems, loading } = useMenu();
+    const { filteredMenuItems, loading } = useMenu();
     const [activeCategory, setActiveCategory] = useState('meal');
     // Automatically extract unique categories from the data
     const categories = useMemo(() => {
-        const unique = new Set(menuItems.map((item) => item.category));
+        const unique = new Set(filteredMenuItems.map((item) => item.category));
         return Array.from(unique);
-    }, [menuItems]);
+    }, [filteredMenuItems]);
 
     const updateCategory = (cat) => setActiveCategory(cat);
 
     const filteredItems = useMemo(() => {
-        if (!activeCategory) return menuItems;
-        return menuItems.filter((item) => item.category === activeCategory);
-    }, [menuItems, activeCategory]);
+        if (!activeCategory) return filteredMenuItems;
+        return filteredMenuItems.filter((item) => item.category === activeCategory);
+    }, [filteredMenuItems, activeCategory]);
 
     return (
         <div className="container">

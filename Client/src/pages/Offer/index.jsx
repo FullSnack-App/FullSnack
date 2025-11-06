@@ -3,13 +3,13 @@ import { Clock4 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 import MenuList from '../Home/components/MenuList';
 import OfferCard from '../../components/OfferCard';
-import { OffersContext } from '../../context/offersContext';
 import OfferCardSkeleton from '../../components/OfferCardSkeleton';
+import { offersContext } from '../../context/offersProvider';
 
 function Offer() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { getOfferById, loading } = useContext(OffersContext);
+    const { getOfferById, loading } = useContext(offersContext);
 
     const offer = getOfferById(id);
 
