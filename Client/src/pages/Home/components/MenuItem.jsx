@@ -2,18 +2,34 @@ import { useState } from 'react';
 import { Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../../../components/Button';
+import { useCart } from '../../../hooks/useCart';
 
-function MenuItem({ name, description, price, imageUrl, rate, offer }) {
+function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
+    const { addToCart, getItemQuantity } = useCart();
     const discountedPrice = offer?.priceAfterDiscount ?? null;
     const [quantity, setQuantity] = useState(1);
 
-    const handleAddToCart = () => {
+    // Get current quantity in cart
+    const cartQuantity = getItemQuantity(_id);
+
+    const handleAddToCart = async () => {
         if (quantity <= 0) {
             toast.error('Quantity must be at least 1');
             return;
         }
-        toast.success(`${quantity} × ${name} added to cart`);
-        console.log(`Added ${quantity} ${name} to cart`);
+
+        // Prepare menu item details for local storage (guest users)
+        const menuItemDetails = {
+            _id,
+            name,
+            description,
+            price: discountedPrice || price,
+            imageUrl,
+            rate,
+            offer,
+        };
+
+        await addToCart(_id, quantity, menuItemDetails);
         setQuantity(1);
     };
 
@@ -36,6 +52,13 @@ function MenuItem({ name, description, price, imageUrl, rate, offer }) {
             {offer && (
                 <div className="absolute left-3 top-3 bg-orange-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
                     -{offer.discountPercent}
+                </div>
+            )}
+
+            {/* Cart Count Badge */}
+            {cartQuantity > 0 && (
+                <div className="absolute right-3 bottom-3 bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-lg z-10">
+                    {cartQuantity} in cart
                 </div>
             )}
 

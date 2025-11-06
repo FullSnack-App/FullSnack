@@ -4,6 +4,7 @@ import Logo from '../assets/logo.png';
 import clsx from 'clsx';
 import { HiMenu, HiSearch, HiUser, HiShoppingCart } from 'react-icons/hi';
 import { useAuth } from '../hooks/useAuth';
+import { useCart } from '../hooks/useCart';
 const CartSidebar = lazy(() => import('./CartSidebar'));
 const AuthModal = lazy(() => import('./AuthModal'));
 import SmallButton from './SmallButton';
@@ -12,7 +13,11 @@ const Navbar = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isAuthOpen, setIsAuthOpen] = useState(false);
     const { isAuthenticated, logout } = useAuth();
+    const { getTotalItems, handleLogout: clearCart } = useCart();
     const navigate = useNavigate();
+
+    const cartItemsCount = getTotalItems();
+
     const navClasses = clsx(
         'sticky',
         'top-0',
@@ -70,12 +75,13 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
+        clearCart(); // Clear cart from local storage and state
         logout();
         navigate('/');
     };
 
     return (
-        <div>
+        <>
             <AuthModal isOpen={isAuthOpen} closeAuth={closeAuth} />
             <div className={navClasses} onClick={isCartOpen ? closeCart : undefined}>
                 <div className="absolute">
@@ -160,11 +166,16 @@ const Navbar = () => {
                     <SmallButton onClick={() => setIsCartOpen(true)}>
                         <div className="indicator">
                             <HiShoppingCart className="h-5 w-5" />
+                            {cartItemsCount > 0 && (
+                                <span className="badge badge-sm indicator-item bg-blue-600 text-white border-0">
+                                    {cartItemsCount}
+                                </span>
+                            )}
                         </div>
                     </SmallButton>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

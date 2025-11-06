@@ -116,10 +116,16 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
+    const logout = (clearCartCallback) => {
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
         localStorage.removeItem('userToken');
         localStorage.removeItem('user');
+        localStorage.removeItem('guestCart'); // Clear guest cart on logout
+
+        // Call cart context's handleLogout if provided
+        if (clearCartCallback && typeof clearCartCallback === 'function') {
+            clearCartCallback();
+        }
     };
 
     const register = async (userData) => {
