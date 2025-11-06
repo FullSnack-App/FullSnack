@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import Contact from '../pages/Contact';
-import Checkout from '../pages/checkout';
 import About from '../pages/About';
 import Offer from '../pages/Offer';
 import AdminDashboard from './../pages/Admin/Dashboard';
@@ -12,6 +11,9 @@ import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
 import { ROUTES } from '../config/routes';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Profile from '../pages/Profile';
+import OrderCancel from '../pages/OrderCancel';
+import Checkout from '../pages/Checkout';
+import OrderSuccess from '../pages/OrderSucces';
 import AdminLayout from './../layouts/Admin';
 export const routes = (
     <Routes>
@@ -35,6 +37,22 @@ export const routes = (
                 element={
                     <ProtectedRoute>
                         <Checkout />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path={ROUTES.ORDER_SUCCESS}
+                element={
+                    <ProtectedRoute>
+                        <OrderSuccess />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path={ROUTES.ORDER_CANCEL}
+                element={
+                    <ProtectedRoute>
+                        <OrderCancel />
                     </ProtectedRoute>
                 }
             />

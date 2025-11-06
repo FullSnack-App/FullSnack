@@ -4,6 +4,8 @@ import { useMenu } from '../../../hooks/useMenu';
 import TogglerGroup from './../../../components/TogglerGroup';
 
 function Menu() {
+    const { menuItems, loading } = useMenu();
+    console.log(menuItems);
     const { filteredMenuItems, loading } = useMenu();
     const [activeCategory, setActiveCategory] = useState('meal');
     // Automatically extract unique categories from the data
