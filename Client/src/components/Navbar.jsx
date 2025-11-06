@@ -1,12 +1,18 @@
-import React, { useCallback } from 'react';
-import { NavLink, Link } from 'react-router';
+import React, { lazy, useCallback, useState } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router';
 import Logo from '../assets/logo.png';
 import clsx from 'clsx';
-import CartSidebar from './CartSidebar';
+import { HiMenu, HiSearch, HiUser, HiShoppingCart } from 'react-icons/hi';
+import { useAuth } from '../hooks/useAuth';
+const CartSidebar = lazy(() => import('./CartSidebar'));
+const AuthModal = lazy(() => import('./AuthModal'));
 import SmallButton from './SmallButton';
 
 const Navbar = () => {
-    const [isCartOpen, setIsCartOpen] = React.useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isAuthOpen, setIsAuthOpen] = useState(false);
+    const { isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
     const navClasses = clsx(
         'sticky',
         'top-0',
@@ -59,7 +65,18 @@ const Navbar = () => {
         setIsCartOpen(false);
     }, []);
 
+    const closeAuth = useCallback(() => {
+        setIsAuthOpen(false);
+    }, []);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
+        <div>
+            <AuthModal isOpen={isAuthOpen} closeAuth={closeAuth} />
             <div className={navClasses} onClick={isCartOpen ? closeCart : undefined}>
                 <div className="absolute">
                     <CartSidebar isOpen={isCartOpen} closeCart={closeCart} />
@@ -71,20 +88,7 @@ const Navbar = () => {
                             role="button"
                             className={`${iconButtonClasses} lg:hidden`}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h8m-8 6h16"
-                                />
-                            </svg>
+                            <HiMenu className="h-5 w-5" />
                         </div>
                         <ul
                             tabIndex={-1}
@@ -117,60 +121,50 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <SmallButton>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
+                        <HiSearch className="h-5 w-5" />
                     </SmallButton>
 
-                    <SmallButton>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            />
-                        </svg>
-                    </SmallButton>
+                    {isAuthenticated ? (
+                        <div className="dropdown dropdown-end">
+                            <SmallButton tabIndex={0}>
+                                <HiUser className="h-5 w-5" />
+                            </SmallButton>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-white"
+                            >
+                                <li>
+                                    <button
+                                        onClick={() => navigate('/profile')}
+                                        className="text-gray-800 hover:text-primary"
+                                    >
+                                        Profile
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="text-gray-800 hover:text-red-600"
+                                    >
+                                        Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <SmallButton onClick={() => setIsAuthOpen(true)}>
+                            <HiUser className="h-5 w-5" />
+                        </SmallButton>
+                    )}
 
                     <SmallButton onClick={() => setIsCartOpen(true)}>
                         <div className="indicator">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                />
-                            </svg>
+                            <HiShoppingCart className="h-5 w-5" />
                         </div>
                     </SmallButton>
                 </div>
             </div>
-        
+        </div>
     );
 };
 
