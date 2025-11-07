@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router';
 import MenuList from '../Home/components/MenuList';
 import OfferCard from '../../components/OfferCard';
 import OfferCardSkeleton from '../../components/OfferCardSkeleton';
-import { offersContext } from '../../context/offersProvider';
+import { OffersContext } from '../../context/OffersContext';
 
 function Offer() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { getOfferById, loading } = useContext(offersContext);
+    const { getOfferById, loading } = useContext(OffersContext);
 
     const offer = getOfferById(id);
 
