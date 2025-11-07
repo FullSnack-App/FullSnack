@@ -12,7 +12,7 @@ import SmallButton from './SmallButton';
 const Navbar = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isAuthOpen, setIsAuthOpen] = useState(false);
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout, role } = useAuth();
     const { getTotalItems, handleLogout: clearCart } = useCart();
     const navigate = useNavigate();
 
@@ -79,6 +79,12 @@ const Navbar = () => {
         logout();
         navigate('/');
     };
+    const routesLinks = ['/', '/contact', '/about'];
+    const routes = ['Home', 'Contact', 'About'];
+    if (role === 'admin') {
+        routesLinks.push('/admin');
+        routes.push('Dashboard');
+    }
 
     return (
         <>
@@ -100,10 +106,10 @@ const Navbar = () => {
                             tabIndex={-1}
                             className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white"
                         >
-                            {['/', '/contact', '/about'].map((path, i) => (
+                            {routesLinks.map((path, i) => (
                                 <li key={i}>
                                     <NavLink to={path} className={getMenuItemClasses}>
-                                        {['Home', 'Menu', 'About', 'Contact'][i]}
+                                        {routes[i]}
                                     </NavLink>
                                 </li>
                             ))}
@@ -116,10 +122,10 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-lg">
-                        {['/', '/contact', '/about'].map((path, i) => (
+                        {routesLinks.map((path, i) => (
                             <li key={i}>
                                 <NavLink to={path} className={getMenuItemClasses}>
-                                    {['Home', 'Contact', 'About'][i]}
+                                    {routes[i]}
                                 </NavLink>
                             </li>
                         ))}

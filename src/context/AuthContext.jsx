@@ -56,12 +56,14 @@ const authReducer = (state, action) => {
                 isAuthenticated: false,
                 isLoading: false,
                 error: null,
+                role: null,
             };
 
         case AUTH_ACTIONS.SET_USER:
             return {
                 ...state,
                 user: action.payload.user,
+                isLoading: false,
             };
 
         default:
@@ -85,10 +87,10 @@ export const AuthProvider = ({ children }) => {
                         },
                     })
                     .then((response) => {
-                        const userData = response.data;
+                        const userData = response.data.user;
                         dispatch({
                             type: AUTH_ACTIONS.SET_USER,
-                            payload: { user: userData },
+                            payload: { user: userData, role: userData.role },
                         });
                     });
             } else {
@@ -109,23 +111,32 @@ export const AuthProvider = ({ children }) => {
 
             const data = await response.data;
 
-            const userResponse = await apiClient.get('/user/me', {
-                headers: {
-                    Authorization: `Bearer ${data.userToken}`,
-                },
-            });
-            const userData = userResponse.data;
-            console.log(userData);
-            localStorage.setItem('user', JSON.stringify(userData));
+            // const userResponse = await apiClient.get('/user/me', {
+            //     headers: {
+            //         Authorization: `Bearer ${data.userToken}`,
+            //     },
+            // });
+            // const userData = userResponse.data.user;
+            // localStorage.setItem('user', JSON.stringify(userData));
 
-            dispatch({
-                type: AUTH_ACTIONS.LOGIN_SUCCESS,
-                payload: {
-                    token: data.userToken,
-                    user: userData,
-                    role: userData.role,
-                },
-            });
+            apiClient
+                .get('/user/me', {
+                    headers: {
+                        Authorization: `Bearer ${data.userToken}`,
+                    },
+                })
+                .then((userResponse) => {
+                    const userData = userResponse.data.user;
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    dispatch({
+                        type: AUTH_ACTIONS.LOGIN_SUCCESS,
+                        payload: {
+                            token: data.userToken,
+                            user: userData,
+                            role: userData.role,
+                        },
+                    });
+                });
 
             return { success: true, data };
         } catch (error) {
@@ -144,16 +155,16 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = async (clearCartCallback) => {
-        dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    const logout = async (clearCartCallback = () => {}) => {
         localStorage.removeItem('userToken');
         localStorage.removeItem('user');
         localStorage.removeItem('guestCart'); // Clear guest cart on logout
 
+        await apiClient.post('/user/logout');
         if (clearCartCallback && typeof clearCartCallback === 'function') {
             clearCartCallback();
         }
-        await apiClient.post('/user/logout');
+        dispatch({ type: AUTH_ACTIONS.LOGOUT });
     };
 
     const register = async (userData) => {

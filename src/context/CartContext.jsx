@@ -98,8 +98,8 @@ const cartReducer = (state, action) => {
         case CART_ACTIONS.SET_ERROR:
             return {
                 ...state,
-                error: action.payload,
                 isLoading: false,
+                error: action.payload,
             };
 
         case CART_ACTIONS.SYNC_START:
@@ -112,6 +112,7 @@ const cartReducer = (state, action) => {
             return {
                 ...state,
                 isSyncing: false,
+                isLoading: false,
             };
 
         default:
@@ -178,10 +179,11 @@ export const CartProvider = ({ children, isAuthenticated }) => {
         try {
             dispatch({ type: CART_ACTIONS.SET_LOADING, payload: true });
             const response = await cartServices.getCart();
-            const normalizedCart = normalizeBackendCart(response);
+            const normalizedCart = normalizeBackendCart(response) || [];
             dispatch({ type: CART_ACTIONS.SET_CART, payload: normalizedCart });
         } catch (error) {
             console.error('Error loading cart from backend:', error);
+            dispatch({ type: CART_ACTIONS.SET_ERROR, payload: 'Failed to load cart' });
 
             loadLocalCart();
         }

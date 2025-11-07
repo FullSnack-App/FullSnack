@@ -3,14 +3,18 @@ import { useAuth } from '../hooks/useAuth';
 import { ROUTES } from '../config/routes';
 
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated, isLoading } = useAuth();
+    const { isAuthenticated, isLoading, role } = useAuth();
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || role !== 'admin') {
         return <Navigate to={ROUTES.HOME} replace />;
     }
+
+    // if (!isAuthenticated) {
+    //     return <Navigate to={ROUTES.HOME} replace />;
+    // }
 
     return children;
 };
