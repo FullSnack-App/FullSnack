@@ -6,7 +6,7 @@ export default function HeroSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
                 <div className="order-2 md:order-1 space-y-5 text-center md:text-left">
                     <p className="inline-block bg-[#FFF0E0] text-[#FF5722] px-4 py-2 rounded-full font-medium text-sm shadow-sm">
-                        Free Delivery on Orders Over $70
+                        Free Delivery on Orders Over $35
                     </p>
 
                     <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
