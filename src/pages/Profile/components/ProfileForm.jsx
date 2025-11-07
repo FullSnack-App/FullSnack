@@ -5,7 +5,7 @@ import Button from '../../../components/Button';
 const ProfileForm = ({ profileData, setProfileData, handleProfileUpdate }) => {
     return (
         <form onSubmit={handleProfileUpdate} className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Your Profile</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Update Your Profile</h2>
             <div className="space-y-6">
                 <Input
                     label="Full Name"

@@ -47,7 +47,7 @@ useEffect(() => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mt-10 mb-10">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-lg mt-10 mb-10">
         <h3 className="text-xl font-semibold mb-4">
           {mode === "add" ? "Add Offer" : "Edit Offer"}
         </h3>
@@ -101,7 +101,7 @@ useEffect(() => {
             <label className="block font-medium mb-1">Select Menu Items *</label>
             <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto border rounded-lg p-2">
               {menuItems.length === 0 ? (
-                <p className="text-gray-500 text-sm text-center col-span-2">
+                <p className="text-gray-500 dark:text-gray-400 text-sm text-center col-span-2">
                   No menu items found
                 </p>
               ) : (

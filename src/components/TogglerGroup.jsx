@@ -11,7 +11,7 @@ function TogglerGroup({ categories, activeCategory, onchange, className = '' }) 
                         ${
                             activeCategory === category
                                 ? 'bg-orange-600 text-white border-orange-600'
-                                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                                : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
                         }`}
                     >
                         {category}

@@ -39,19 +39,19 @@ const AuthModal = ({ isOpen, closeAuth }) => {
             />
 
             <div
-                className="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl transform transition-all overflow-hidden flex h-[70vh]"
+                className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-5xl transform transition-all overflow-hidden flex h-[70vh]"
                 onClick={(e) => e.stopPropagation()}
             >
                 <AuthModalBranding />
 
                 <div className="w-full md:w-1/2 flex flex-col max-h-[90vh]">
-                    <div className="flex items-center justify-between p-6 border-b">
-                        <h2 className="text-2xl font-bold text-gray-900">
+                    <div className="flex items-center justify-between p-6 border-b dark:border-gray-700">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                             {activeCategory === 'login' ? 'Welcome Back' : 'Create Account'}
                         </h2>
                         <button
                             onClick={closeAuth}
-                            className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
                             aria-label="Close modal"
                         >
                             <MdClose className="w-6 h-6" />
