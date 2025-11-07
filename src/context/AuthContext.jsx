@@ -167,13 +167,44 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
+            dispatch({ type: AUTH_ACTIONS.LOGIN_START });
             const response = await apiClient.post('/user/register', userData);
             const data = response.data;
+
+            // After successful registration, automatically log the user in
+            const userResponse = await apiClient.get('/user/me', {
+                headers: { Authorization: `Bearer ${data.userToken}` },
+            });
+
+            const user = userResponse.data.user;
+
+            localStorage.setItem('userToken', data.userToken);
+
+            dispatch({
+                type: AUTH_ACTIONS.LOGIN_SUCCESS,
+                payload: {
+                    token: data.userToken,
+                    user: user,
+                    role: user.role,
+                },
+            });
+
             return { success: true, data };
         } catch (error) {
+            const backendError =
+                error.response?.data?.err_msg ||
+                error.response?.data?.message ||
+                error.message ||
+                'Registration failed';
+
+            dispatch({
+                type: AUTH_ACTIONS.LOGIN_FAILURE,
+                payload: { error: backendError },
+            });
+
             return {
                 success: false,
-                error: error.response?.data?.message || error.message,
+                error: backendError,
             };
         }
     };
