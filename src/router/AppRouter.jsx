@@ -18,67 +18,73 @@ import AdminLayout from './../layouts/Admin';
 import AdminOrders from './../pages/Admin/components/AdminOrders/AdminOrder';
 import ProtectedAminRoute from '../components/ProtectedAdmin';
 import { OrderProvider } from '../context/OrderProvider';
+import ProtectedUserRoute from '../components/protectedUser';
+
 export const routes = (
-    <Routes>
-        <Route element={<MainLayout />}>
-            <Route path={ROUTES.HOME} element={<Home />} />
-            <Route path={ROUTES.OFFER} element={<Offer />} />
-            <Route path={ROUTES.CONTACT} element={<Contact />} />
-            <Route path={ROUTES.ABOUT} element={<About />} />
+  <Routes>
+    <Route
+      element={
+        <ProtectedUserRoute>
+          <MainLayout />
+        </ProtectedUserRoute>
+      }
+    >
+      <Route path={ROUTES.HOME} element={<Home />} />
+      <Route path={ROUTES.OFFER} element={<Offer />} />
+      <Route path={ROUTES.CONTACT} element={<Contact />} />
+      <Route path={ROUTES.ABOUT} element={<About />} />
 
-            <Route
-                path={ROUTES.PROFILE}
-                element={
-                    <ProtectedRoute>
-                        <Profile />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path={ROUTES.PROFILE}
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.CHECKOUT}
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.ORDER_SUCCESS}
+        element={
+          <ProtectedRoute>
+            <OrderSuccess />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.ORDER_CANCEL}
+        element={
+          <ProtectedRoute>
+            <OrderCancel />
+          </ProtectedRoute>
+        }
+      />
+    </Route>
 
-            <Route
-                path={ROUTES.CHECKOUT}
-                element={
-                    <ProtectedRoute>
-                        <Checkout />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path={ROUTES.ORDER_SUCCESS}
-                element={
-                    <ProtectedRoute>
-                        <OrderSuccess />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path={ROUTES.ORDER_CANCEL}
-                element={
-                    <ProtectedRoute>
-                        <OrderCancel />
-                    </ProtectedRoute>
-                }
-            />
-        </Route>
-        <OrderProvider>
-            <Route
-                path={ROUTES.ADMIN}
-                element={
-                    <ProtectedAminRoute>
-                        <AdminLayout />
-                    </ProtectedAminRoute>
-                }
-            >
-                <Route index element={<AdminDashboard />} />
-                <Route path="menu" element={<AdminMenuItem />} />
-                <Route path="offers" element={<AdminOffers />} />
-                <Route path="orders" element={<AdminOrders />} />
+    {/* صفحات الأدمن */}
+    <Route
+      path={ROUTES.ADMIN}
+      element={
+        <ProtectedAminRoute>
+          <OrderProvider>
+            <AdminLayout />
+          </OrderProvider>
+        </ProtectedAminRoute>
+      }
+    >
+      <Route index element={<AdminDashboard />} />
+      <Route path="menu" element={<AdminMenuItem />} />
+      <Route path="offers" element={<AdminOffers />} />
+      <Route path="orders" element={<AdminOrders />} />
+    </Route>
 
-            </Route>
-        </OrderProvider>
-
-
-
-        <Route path="*" element={<div>Page Not Found</div>} />
-    </Routes>
+    <Route path="*" element={<div>Page Not Found</div>} />
+  </Routes>
 );

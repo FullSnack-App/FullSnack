@@ -11,6 +11,9 @@ const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated) {
         return <Navigate to={ROUTES.HOME} replace />;
     }
+    if (role === "admin") {
+        return <Navigate to={ROUTES.ADMIN} replace />;
+    }
 
 
     return children;
