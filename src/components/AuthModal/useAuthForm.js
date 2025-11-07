@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export const useAuthForm = (closeAuth) => {
     const [activeCategory, setActiveCategory] = useState('login');
+    const [localError, setError] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -46,7 +47,8 @@ export const useAuthForm = (closeAuth) => {
         } else {
             // Register
             if (formData.password !== formData.repeatPassword) {
-                return; // Passwords don't match
+                setError("Passwords don't match");
+                return;
             }
 
             const userData = {
@@ -64,6 +66,9 @@ export const useAuthForm = (closeAuth) => {
             if (result.success) {
                 closeAuth();
                 resetForm();
+            } else {
+                // The error will be automatically set in the state by the register function
+                console.error("Registration failed:", result.error);
             }
         }
     };
@@ -75,6 +80,6 @@ export const useAuthForm = (closeAuth) => {
         handleInputChange,
         handleSubmit,
         isLoading,
-        error,
+        error: localError || error,  // Show local validation errors or backend errors
     };
 };

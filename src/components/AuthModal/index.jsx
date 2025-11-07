@@ -45,7 +45,7 @@ const AuthModal = ({ isOpen, closeAuth }) => {
                 <AuthModalBranding />
 
                 <div className="w-full md:w-1/2 flex flex-col max-h-[90vh]">
-                    <div className="flex items-center justify-between p-6 border-b dark:border-gray-700">
+                    <div className="flex items-center justify-between p-6 dark:border-gray-700">
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                             {activeCategory === 'login' ? 'Welcome Back' : 'Create Account'}
                         </h2>
@@ -57,8 +57,9 @@ const AuthModal = ({ isOpen, closeAuth }) => {
                             <MdClose className="w-6 h-6" />
                         </button>
                     </div>
-
+<hr className='w-100 text-primary m-auto'></hr>
                     <TogglerGroup
+                    className='m-auto p-4'
                         activeCategory={activeCategory}
                         categories={['login', 'Register']}
                         onchange={setActiveCategory}
