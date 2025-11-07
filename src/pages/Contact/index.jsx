@@ -14,34 +14,34 @@ export default function Contact() {
       <div className="w-full max-w-4xl grid md:grid-cols-2 gap-10">
         <div className="card bg-white dark:bg-gray-800 shadow-lg">
           <div className="card-body">
-            <h2 className="card-title text-lg mb-4">Send a Message</h2>
+            <h2 className="card-title text-lg mb-4 dark:text-gray-100">Send a Message</h2>
             <form className="space-y-4">
               <div>
                 <label className="label">
-                  <span className="label-text">Full Name</span>
+                  <span className="label-text dark:text-gray-300">Full Name</span>
                 </label>
                 <input
                   type="text"
                   placeholder="Your name"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                 />
               </div>
               <div>
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text dark:text-gray-300">Email</span>
                 </label>
                 <input
                   type="email"
                   placeholder="you@example.com"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                 />
               </div>
               <div>
                 <label className="label">
-                  <span className="label-text">Message</span>
+                  <span className="label-text dark:text-gray-300">Message</span>
                 </label>
                 <textarea
-                  className="textarea textarea-bordered w-full"
+                  className="textarea textarea-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                   rows="4"
                   placeholder="Type your message..."
                 ></textarea>

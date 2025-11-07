@@ -119,7 +119,7 @@ const Checkout = () => {
                                         {...register('customerFullName', {
                                             required: 'Full name is required',
                                         })}
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                         placeholder="Enter your full name"
                                     />
                                     {errors.customerFullName && (
@@ -139,7 +139,7 @@ const Checkout = () => {
                                                 message: 'Invalid email address',
                                             },
                                         })}
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                         placeholder="you@example.com"
                                     />
                                     {errors.customerEmail && (
@@ -164,7 +164,7 @@ const Checkout = () => {
                                     {...register('deliveryAddress', {
                                         required: 'Address is required',
                                     })}
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                     placeholder="Enter your delivery address"
                                 />
                                 {errors.deliveryAddress && (
@@ -186,7 +186,7 @@ const Checkout = () => {
                                             message: 'Enter a valid phone number',
                                         },
                                     })}
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                     placeholder="e.g. 01012345678"
                                 />
                                 {errors.phoneNumber && (
