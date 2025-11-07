@@ -100,7 +100,7 @@ const Navbar = () => {
                             tabIndex={-1}
                             className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white"
                         >
-                            {['/', '/menu', '/about', '/contact'].map((path, i) => (
+                            {['/', '/contact', '/about'].map((path, i) => (
                                 <li key={i}>
                                     <NavLink to={path} className={getMenuItemClasses}>
                                         {['Home', 'Menu', 'About', 'Contact'][i]}
@@ -116,7 +116,7 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-lg">
-                        {['/', '/menu', '/about', '/contact'].map((path, i) => (
+                        {['/', '/contact', '/about'].map((path, i) => (
                             <li key={i}>
                                 <NavLink to={path} className={getMenuItemClasses}>
                                     {['Home', 'Contact', 'About'][i]}
