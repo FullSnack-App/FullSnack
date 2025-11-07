@@ -7,6 +7,6 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [tailwindcss(), react()],
-        base: env.VITE_BASE_URL || '/fullsnack',
+        base: mode === 'development' ? '/' : '/fullsnack',
     };
 });
