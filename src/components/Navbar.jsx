@@ -1,5 +1,5 @@
-import React, { lazy, useCallback, useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router';
+import React, { lazy, useCallback, useState, useEffect } from 'react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router';
 import Logo from '../assets/logo.png';
 import clsx from 'clsx';
 import { HiMenu, HiSearch, HiUser, HiShoppingCart } from 'react-icons/hi';
@@ -16,7 +16,17 @@ const Navbar = () => {
     const { isAuthenticated, logout, role } = useAuth();
     const { getTotalItems, handleLogout: clearCart } = useCart();
     const navigate = useNavigate();
+    const location = useLocation();
     const cartItemsCount = getTotalItems();
+
+    // Check if we should open auth modal from navigation state
+    useEffect(() => {
+        if (location.state?.openAuthModal) {
+            setIsAuthOpen(true);
+            // Clear the state to prevent modal from reopening
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     const navClasses = clsx(
         'sticky',
