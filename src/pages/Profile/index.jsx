@@ -17,7 +17,8 @@ const Profile = () => {
     const [profileData, setProfileData] = useState({
         fullName: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
+        age: '',
         address: '',
     });
 
@@ -29,7 +30,8 @@ const Profile = () => {
                 setProfileData({
                     fullName: userData.fullName || '',
                     email: userData.email || '',
-                    phoneNumber: userData.phoneNumber || '',
+                    phone: userData.phone || '',
+                    age: userData.age || '',
                     address: userData.address || '',
                 });
                 setUser(userData);
@@ -41,7 +43,8 @@ const Profile = () => {
             }
         };
         fetchProfile();
-    }, [setUser]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Only run once on mount
 
     useEffect(() => {
         if (activeTab === 'orders') {
@@ -66,12 +69,39 @@ const Profile = () => {
         e.preventDefault();
         const loadingToast = toast.loading('Updating profile...');
         try {
-            const response = await updateUserProfile(profileData);
-            setUser(response.user || response);
+            // Prepare data according to backend API spec
+            const updateData = {
+                fullName: profileData.fullName,
+                email: profileData.email,
+                phone: profileData.phone,
+                age: profileData.age ? parseInt(profileData.age) : undefined,
+            };
+            
+            // Remove undefined values
+            Object.keys(updateData).forEach(key => {
+                if (updateData[key] === undefined || updateData[key] === '') {
+                    delete updateData[key];
+                }
+            });
+            
+            const response = await updateUserProfile(updateData);
+            const updatedUser = response.user || response;
+            setUser(updatedUser);
+            
+            // Update local state with response
+            setProfileData({
+                fullName: updatedUser.fullName || '',
+                email: updatedUser.email || '',
+                phone: updatedUser.phone || '',
+                age: updatedUser.age || '',
+                address: updatedUser.address || '',
+            });
+            
             toast.dismiss(loadingToast);
             toast.success('Profile updated successfully!');
         } catch (error) {
             toast.dismiss(loadingToast);
+            console.error('Update profile error:', error);
             toast.error(error.message || 'Failed to update profile');
         }
     };

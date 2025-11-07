@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Clock4 } from 'lucide-react';
+import { Clock4, ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 import MenuList from '../Home/components/MenuList';
 import OfferCard from '../../components/OfferCard';
@@ -47,6 +47,15 @@ function Offer() {
 
     return (
         <section className="container">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 mb-6 transition-colors"
+            >
+                <ArrowLeft size={20} />
+                <span>Back to Home</span>
+            </button>
+
             {/* Offer Hero */}
             <OfferCard offer={offer} onClick={() => {}} />
 

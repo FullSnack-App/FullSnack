@@ -20,12 +20,12 @@ export const getUserProfile = async () => {
 
 /**
  * Update user profile
- * @param {Object} userData - Updated user data
+ * @param {Object} userData - Updated user data (fullName, email, age, phone)
  * @returns {Promise} Updated user data
  */
 export const updateUserProfile = async (userData) => {
     try {
-        const response = await apiClient.put('/user/me', userData);
+        const response = await apiClient.patch('/user/update', userData);
         return response.data;
     } catch (error) {
         throw error.response?.data || error;
