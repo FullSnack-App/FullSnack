@@ -18,6 +18,7 @@ import AdminLayout from './../layouts/Admin';
 import AdminOrders from './../pages/Admin/components/AdminOrders/AdminOrder';
 import ProtectedAminRoute from '../components/ProtectedAdmin';
 import { OrderProvider } from '../context/OrderProvider';
+import MailVerification from '../pages/MailVerification';
 export const routes = (
     <Routes>
         <Route element={<MainLayout />}>
@@ -60,24 +61,23 @@ export const routes = (
                 }
             />
         </Route>
-        <OrderProvider>
-            <Route
-                path={ROUTES.ADMIN}
-                element={
-                    <ProtectedAminRoute>
+        <Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
+
+        <Route
+            path={ROUTES.ADMIN}
+            element={
+                <ProtectedAminRoute>
+                    <OrderProvider>
                         <AdminLayout />
-                    </ProtectedAminRoute>
-                }
-            >
-                <Route index element={<AdminDashboard />} />
-                <Route path="menu" element={<AdminMenuItem />} />
-                <Route path="offers" element={<AdminOffers />} />
-                <Route path="orders" element={<AdminOrders />} />
-
-            </Route>
-        </OrderProvider>
-
-
+                    </OrderProvider>
+                </ProtectedAminRoute>
+            }
+        >
+            <Route index element={<AdminDashboard />} />
+            <Route path="menu" element={<AdminMenuItem />} />
+            <Route path="offers" element={<AdminOffers />} />
+            <Route path="orders" element={<AdminOrders />} />
+        </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
