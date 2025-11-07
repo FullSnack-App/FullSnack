@@ -91,7 +91,6 @@ const Profile = () => {
         <div className="min-h-screen bg-linear-to-br from-orange-50 via-white to-orange-50 py-12">
             <div className="container mx-auto px-4 max-w-6xl">
                 <ProfileHeader profileData={profileData} handleLogout={handleLogout} />
-
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 

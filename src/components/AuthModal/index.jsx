@@ -45,20 +45,21 @@ const AuthModal = ({ isOpen, closeAuth }) => {
                 <AuthModalBranding />
 
                 <div className="w-full md:w-1/2 flex flex-col max-h-[90vh]">
-                    <div className="flex items-center justify-between p-6 border-b">
-                        <h2 className="text-2xl font-bold text-gray-900">
+                    <div className="flex items-center justify-between p-6 ">
+                        <h2 className="text-2xl m-auto font-bold text-gray-900">
                             {activeCategory === 'login' ? 'Welcome Back' : 'Create Account'}
                         </h2>
                         <button
                             onClick={closeAuth}
-                            className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                            className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full "
                             aria-label="Close modal"
                         >
                             <MdClose className="w-6 h-6" />
                         </button>
                     </div>
-
+<hr className='w-100 text-primary m-auto'></hr>
                     <TogglerGroup
+                    className='m-auto p-4'
                         activeCategory={activeCategory}
                         categories={['login', 'Register']}
                         onchange={setActiveCategory}
