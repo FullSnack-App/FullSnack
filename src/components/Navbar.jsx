@@ -15,7 +15,6 @@ const Navbar = () => {
     const { isAuthenticated, logout, role } = useAuth();
     const { getTotalItems, handleLogout: clearCart } = useCart();
     const navigate = useNavigate();
-
     const cartItemsCount = getTotalItems();
 
     const navClasses = clsx(

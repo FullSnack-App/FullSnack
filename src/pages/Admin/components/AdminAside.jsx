@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaHome, FaUsers, FaThList, FaBox, FaShoppingCart, FaRulerCombined } from 'react-icons/fa';
-import { NavLink } from 'react-router';
+import { FaHome, FaUsers, FaThList, FaShoppingCart } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 export default function AdminAside() {
     const linkClasses = ({ isActive }) =>
@@ -23,8 +23,11 @@ export default function AdminAside() {
                 <NavLink to="/admin" end className={linkClasses}>
                     <FaHome /> Dashboard
                 </NavLink>
+                <NavLink to="/admin/orders" className={linkClasses}>
+                    <FaShoppingCart /> Orders
+                </NavLink>
                 <NavLink to="/admin/menu" className={linkClasses}>
-                    <FaUsers /> MenuItem
+                    <FaUsers /> Menu Items
                 </NavLink>
                 <NavLink to="/admin/offers" className={linkClasses}>
                     <FaThList /> Offers

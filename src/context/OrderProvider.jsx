@@ -10,7 +10,7 @@ export function OrderProvider({ children }) {
         const fetchOrders = async () => {
             try {
                 const response = await apiClient.get('/orders/all');
-                setOrders(response.data.items);
+                setOrders(response.data.orders);
             } catch (error) {
                 console.error('Failed to fetch orders:', error);
             } finally {
