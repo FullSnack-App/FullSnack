@@ -14,7 +14,7 @@ const ConfirmEmail = () => {
         const confirmEmail = async () => {
             try {
                 const res = await apiClient.get(
-                    `https://fullsnack.obl.ee/user/confirm-email/${userId}`
+                    `/user/confirm-email/${userId}`
                 );
                 if (res.data?.accessToken) {
                     setStatus('success');
