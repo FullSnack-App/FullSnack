@@ -131,10 +131,6 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <SmallButton>
-                        <HiSearch className="h-5 w-5" />
-                    </SmallButton>
-
                     {isAuthenticated ? (
                         <div className="dropdown dropdown-end">
                             <SmallButton tabIndex={0}>
