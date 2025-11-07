@@ -8,7 +8,7 @@ export default function OffersTable({
   const skeletonRows = Array.from({ length: 5 });
 
   return (
-    <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+    <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <table className="table w-full">
         <thead>
           <tr className="bg-gray-800 text-white text-center">

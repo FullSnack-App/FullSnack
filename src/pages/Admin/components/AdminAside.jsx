@@ -9,14 +9,14 @@ export default function AdminAside() {
         }`;
 
     return (
-        <aside className="w-64 bg-white border-r shadow-md p-4 space-y-3">
+        <aside className="w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 shadow-md p-4 space-y-3">
             <div className="flex items-center gap-3 mb-6">
                 <img
                     src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                     alt="Admin avatar"
                     className="w-10 h-10 rounded-full"
                 />
-                <span className="font-medium text-gray-800">Hello, Admin</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">Hello, Admin</span>
             </div>
 
             <nav className="flex flex-col space-y-2">

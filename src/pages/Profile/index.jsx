@@ -92,7 +92,7 @@ const Profile = () => {
             <div className="container mx-auto px-4 max-w-6xl">
                 <ProfileHeader profileData={profileData} handleLogout={handleLogout} />
 
-                <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
                     <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
                     <div className="p-8">

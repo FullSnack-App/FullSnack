@@ -8,7 +8,7 @@ export default function MenuTable({
   const skeletonRows = Array.from({ length: 5 });
 
   return (
-    <div className="overflow-x-auto shadow-md rounded-lg bg-white">
+    <div className="overflow-x-auto shadow-md rounded-lg bg-white dark:bg-gray-800">
       <table className="table w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-800 text-white">

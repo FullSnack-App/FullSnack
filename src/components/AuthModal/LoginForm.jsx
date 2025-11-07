@@ -55,7 +55,7 @@ const LoginForm = ({ formData, handleInputChange, isLoading, error, onSwitchToRe
                 >
                     Forgot password?
                 </button>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                     Don't have an account?{' '}
                     <button
                         type="button"

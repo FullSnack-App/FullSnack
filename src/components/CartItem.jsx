@@ -28,7 +28,7 @@ const CartItem = ({ menuItemId, quantity, priceAtAddition, menuItemDetails }) =>
     };
 
     return (
-        <div className="flex items-center space-x-4 bg-gray-100 p-4 rounded-lg gap-2">
+        <div className="flex items-center space-x-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg gap-2">
             <div className="h-20 w-20 shrink-0">
                 <img
                     src={itemImage}
@@ -37,26 +37,26 @@ const CartItem = ({ menuItemId, quantity, priceAtAddition, menuItemDetails }) =>
                 />
             </div>
             <div className="flex-1 gap-2">
-                <h3 className="text-lg font-semibold">{itemName}</h3>
-                <p className="text-gray-600">${itemPrice.toFixed(2)}</p>
+                <h3 className="text-lg font-semibold dark:text-gray-100">{itemName}</h3>
+                <p className="text-gray-600 dark:text-gray-400">${itemPrice.toFixed(2)}</p>
                 <div>
                     <div className="flex items-center space-x-2 gap-2">
                         <SmallButton
                             onClick={handleDecrement}
-                            className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
+                            className="w-0 h-0 p-4 text-xl bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500"
                         >
                             -
                         </SmallButton>
-                        <span className="text-gray-800 font-medium">{quantity}</span>
+                        <span className="text-gray-800 dark:text-gray-200 font-medium">{quantity}</span>
                         <SmallButton
                             onClick={handleIncrement}
-                            className="w-0 h-0 p-4 text-xl bg-white border border-gray-300"
+                            className="w-0 h-0 p-4 text-xl bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500"
                         >
                             +
                         </SmallButton>
                         <button
                             onClick={handleRemove}
-                            className="ml-2 text-red-500 hover:text-red-700 text-sm"
+                            className="ml-2 text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm"
                         >
                             Remove
                         </button>

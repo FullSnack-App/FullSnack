@@ -92,12 +92,12 @@ const Checkout = () => {
 
     if (loading) return <div className="h-83 text-center py-20">Loading your cart...</div>;
     if (items.length === 0)
-        return <div className="h-83 text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
+        return <div className="h-83 text-center py-20 text-gray-600 dark:text-gray-400">🛒 Your cart is empty.</div>;
 
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
             <div className="container mx-auto px-4">
-                <h1 className="text-4xl font-bold mb-10 text-gray-800 text-center">Checkout</h1>
+                <h1 className="text-4xl font-bold mb-10 text-gray-800 dark:text-gray-100 text-center">Checkout</h1>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -106,13 +106,13 @@ const Checkout = () => {
                     {/* 🧍 Customer Info Section */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* Customer Information */}
-                        <div className="bg-white shadow-md rounded-xl p-8 space-y-5">
-                            <h3 className="text-2xl font-semibold text-orange-600">
+                        <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-8 space-y-5">
+                            <h3 className="text-2xl font-semibold text-orange-600 dark:text-orange-400">
                                 Customer Information
                             </h3>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="label font-medium text-gray-600">
+                                    <label className="label font-medium text-gray-600 dark:text-gray-300">
                                         Full Name
                                     </label>
                                     <input
@@ -130,7 +130,7 @@ const Checkout = () => {
                                 </div>
 
                                 <div>
-                                    <label className="label font-medium text-gray-600">Email</label>
+                                    <label className="label font-medium text-gray-600 dark:text-gray-300">Email</label>
                                     <input
                                         {...register('customerEmail', {
                                             required: 'Email is required',
@@ -152,12 +152,12 @@ const Checkout = () => {
                         </div>
 
                         {/* Delivery Details */}
-                        <div className="bg-white shadow-md rounded-xl p-8 space-y-5">
-                            <h3 className="text-2xl font-semibold text-orange-600">
+                        <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-8 space-y-5">
+                            <h3 className="text-2xl font-semibold text-orange-600 dark:text-orange-400">
                                 Delivery Details
                             </h3>
                             <div>
-                                <label className="label font-medium text-gray-600">
+                                <label className="label font-medium text-gray-600 dark:text-gray-300">
                                     Delivery Address
                                 </label>
                                 <input
@@ -175,7 +175,7 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <label className="label font-medium text-gray-600">
+                                <label className="label font-medium text-gray-600 dark:text-gray-300">
                                     Phone Number
                                 </label>
                                 <input
@@ -198,12 +198,12 @@ const Checkout = () => {
                         </div>
 
                         {/* Payment Method */}
-                        <div className="bg-white shadow-md rounded-xl p-8 space-y-5">
-                            <h3 className="text-2xl font-semibold text-orange-600">
+                        <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-8 space-y-5">
+                            <h3 className="text-2xl font-semibold text-orange-600 dark:text-orange-400">
                                 Payment Method
                             </h3>
                             <div className="flex flex-col gap-3">
-                                <label className="flex items-center gap-2 cursor-pointer">
+                                <label className="flex items-center gap-2 cursor-pointer dark:text-gray-200">
                                     <input
                                         type="radio"
                                         value="cash"
@@ -213,7 +213,7 @@ const Checkout = () => {
                                     <span>Cash on Delivery</span>
                                 </label>
 
-                                <label className="flex items-center gap-2 cursor-pointer">
+                                <label className="flex items-center gap-2 cursor-pointer dark:text-gray-200">
                                     <input
                                         type="radio"
                                         value="card"
@@ -227,12 +227,12 @@ const Checkout = () => {
                     </div>
 
                     {/* 🧾 Order Summary Section */}
-                    <div className="bg-white shadow-md rounded-xl p-8 h-fit md:sticky md:top-24">
-                        <h3 className="text-2xl font-semibold mb-6 text-orange-600">
+                    <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-8 h-fit md:sticky md:top-24">
+                        <h3 className="text-2xl font-semibold mb-6 text-orange-600 dark:text-orange-400">
                             Order Summary
                         </h3>
 
-                        <ul className="divide-y divide-gray-200 mb-6">
+                        <ul className="divide-y divide-gray-200 dark:divide-gray-700 mb-6">
                             {detailedCartItems.map((item) => {
                                 const hasDiscount =
                                     item.discountApplied &&
@@ -247,28 +247,28 @@ const Checkout = () => {
                                             className="w-16 h-16 object-cover rounded-lg"
                                         />
                                         <div className="flex-1">
-                                            <h4 className="font-medium text-gray-800">
+                                            <h4 className="font-medium text-gray-800 dark:text-gray-200">
                                                 {item.name}
                                             </h4>
-                                            <p className="text-sm text-gray-500">
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
                                                 Qty: {item.quantity}
                                             </p>
 
-                                            <div className="text-sm mt-1">
+                                            <div className="text-sm mt-1 dark:text-gray-300">
                                                 {hasDiscount ? (
                                                     <>
-                                                        <span className="line-through text-gray-400 mr-2">
+                                                        <span className="line-through text-gray-400 dark:text-gray-500 mr-2">
                                                             ${item.originalPrice.toFixed(2)}
                                                         </span>
-                                                        <span className="text-orange-600 font-semibold">
+                                                        <span className="text-orange-600 dark:text-orange-400 font-semibold">
                                                             ${item.priceAtAddition.toFixed(2)}
                                                         </span>
-                                                        <span className="ml-2 text-green-600 font-medium">
+                                                        <span className="ml-2 text-green-600 dark:text-green-400 font-medium">
                                                             ({item.discountApplied}% OFF)
                                                         </span>
                                                     </>
                                                 ) : (
-                                                    <span className="text-gray-800 font-semibold">
+                                                    <span className="text-gray-800 dark:text-gray-200 font-semibold">
                                                         ${item.priceAtAddition.toFixed(2)}
                                                     </span>
                                                 )}
@@ -279,10 +279,10 @@ const Checkout = () => {
                             })}
                         </ul>
 
-                        <hr className="my-4" />
+                        <hr className="my-4 dark:border-gray-700" />
                         <div className="space-y-2 text-lg font-semibold">
                             {totalSaved > 0 && (
-                                <div className="flex justify-between text-gray-600">
+                                <div className="flex justify-between text-gray-600 dark:text-gray-400">
                                     <span>Total before discount</span>
                                     <span>${totalBeforeDiscount.toFixed(2)}</span>
                                 </div>
@@ -290,7 +290,7 @@ const Checkout = () => {
 
                             <div
                                 className={`flex justify-between ${
-                                    totalSaved > 0 ? 'text-orange-600' : 'text-gray-800'
+                                    totalSaved > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 <span>Total</span>

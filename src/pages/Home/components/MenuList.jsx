@@ -14,7 +14,7 @@ function MenuList({ menulist = [], loading, className = '' }) {
                 menulist.map((menuitem) => <MenuItem key={menuitem._id} {...menuitem} />)
             ) : (
                 // When loaded but empty
-                <p className="col-span-full text-center text-gray-500 text-lg">
+                <p className="col-span-full text-center text-gray-500 dark:text-gray-400 text-lg">
                     No menu items found.
                 </p>
             )}

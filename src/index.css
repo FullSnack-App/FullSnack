@@ -2,6 +2,15 @@
 @import 'tailwindcss';
 @plugin "daisyui";
 
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-hover: #e9ebef;
+    --color-grays: #000000;
+    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
 @layer base {
     * {
         margin: 0;
@@ -14,30 +23,13 @@
         --color-secondary: oklch(65% 0.24 354.3);
         --color-secondary-content: white;
         font-family: var(--font-sans);
+        @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
     }
 }
 
 @layer components {
     .container-customized {
         @apply mx-auto px-4 sm:px-6 lg:px-8;
-    }
-}
-
-@theme {
-    --color-hover: #e9ebef;
-    --color-grays: #000000;
-    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-@layer utilities {
-    .container {
-        @apply mx-auto px-4 py-16 w-full
-        sm:max-w-[540px]
-        md:max-w-[720px]
-        lg:max-w-[960px]
-        xl:max-w-[1140px]
-        2xl:max-w-[1320px];
     }
 }
 
@@ -61,4 +53,15 @@ input:-webkit-autofill {
 input:-webkit-autofill:focus {
     background-color: #f3f4f6 !important;
     -webkit-text-fill-color: #000 !important;
+}
+
+/* Dark mode autofill styles */
+.dark input:-webkit-autofill {
+    background-color: #374151 !important; /* dark:bg-gray-700 */
+    -webkit-text-fill-color: #fff !important; /* dark:text-white */
+}
+
+.dark input:-webkit-autofill:focus {
+    background-color: #374151 !important;
+    -webkit-text-fill-color: #fff !important;
 }

@@ -18,7 +18,7 @@ const Offers = () => {
                 <h2 className="text-4xl font-bold mb-4">
                     Special <span className="text-orange-600">Offers</span>
                 </h2>
-                <p className="max-w-2xl mx-auto text-gray-600">
+                <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
                     Enjoy our limited-time deals and exclusive discounts.
                 </p>
             </div>
@@ -28,7 +28,7 @@ const Offers = () => {
                 // the swipper comp takes the full width so we will make one skeleton takes the full width too
                 <OfferCardSkeleton/>
             ) : offers.length === 0 ? (
-                <p className="text-center text-gray-500">No offers available right now.</p>
+                <p className="text-center text-gray-500 dark:text-gray-400">No offers available right now.</p>
             ) : (
                 <Swiper
                     slidesPerView={1}

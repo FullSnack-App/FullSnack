@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { HiMenu, HiSearch, HiUser, HiShoppingCart } from 'react-icons/hi';
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../hooks/useCart';
+import ThemeToggle from './ThemeToggle';
 const CartSidebar = lazy(() => import('./CartSidebar'));
 const AuthModal = lazy(() => import('./AuthModal'));
 import SmallButton from './SmallButton';
@@ -33,12 +34,17 @@ const Navbar = () => {
         'navbar',
         'shadow-sm',
         'bg-white/70',
+        'dark:bg-gray-900/70',
         'text-gray-800',
+        'dark:text-gray-100',
         'text-lg',
         'backdrop-blur-md',
         'backdrop-filter',
         'border-b',
-        'border-gray-200'
+        'border-gray-200',
+        'dark:border-gray-700',
+        'transition-colors',
+        'duration-200'
     );
 
     const getMenuItemClasses = ({ isActive }) =>
@@ -57,9 +63,11 @@ const Navbar = () => {
         'btn',
         'btn-ghost',
         'hover:bg-hover/80',
+        'dark:hover:bg-gray-700',
         'transition-colors',
         'duration-200',
         'text-gray-800',
+        'dark:text-gray-200',
         'border-0',
         'shadow-none',
         'rounded-lg'
@@ -103,7 +111,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={-1}
-                            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white"
+                            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white dark:bg-gray-800"
                         >
                             {routesLinks.map((path, i) => (
                                 <li key={i}>
@@ -138,12 +146,12 @@ const Navbar = () => {
                             </SmallButton>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-white"
+                                className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-white dark:bg-gray-800"
                             >
                                 <li>
                                     <button
                                         onClick={() => navigate('/profile')}
-                                        className="text-gray-800 hover:text-primary"
+                                        className="text-gray-800 dark:text-gray-200 hover:text-primary"
                                     >
                                         Profile
                                     </button>
@@ -151,7 +159,7 @@ const Navbar = () => {
                                 <li>
                                     <button
                                         onClick={handleLogout}
-                                        className="text-gray-800 hover:text-red-600"
+                                        className="text-gray-800 dark:text-gray-200 hover:text-red-600"
                                     >
                                         Logout
                                     </button>
@@ -163,6 +171,8 @@ const Navbar = () => {
                             <HiUser className="h-5 w-5" />
                         </SmallButton>
                     )}
+
+                    <ThemeToggle />
 
                     <SmallButton onClick={() => setIsCartOpen(true)}>
                         <div className="indicator">
