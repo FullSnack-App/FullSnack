@@ -2,9 +2,12 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import apiClient from '../../config/axiosConfig';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 const Checkout = () => {
     // 🛒 Cart Data from backend
+      const navigate = useNavigate();
+
     const [items, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -77,7 +80,7 @@ const Checkout = () => {
             } else {
                 toast.success('Order placed successfully!');
                 setTimeout(() => {
-                    window.location.href = `/order-success/${response.data.order._id}`;
+                    navigate(`/order-success/${response.data.order._id}`);
                 }, 500);
             }
         } catch (error) {
