@@ -240,6 +240,8 @@ export const CartProvider = ({ children, isAuthenticated }) => {
 
     const addToCart = async (menuItemId, quantity = 1, menuItemDetails = null) => {
         try {
+            dispatch({ type: CART_ACTIONS.SET_LOADING, payload: true });
+
             if (isAuthenticated) {
                 const response = await cartServices.addToCart({ menuItemId, quantity });
                 const normalizedCart = normalizeBackendCart(response);
@@ -257,6 +259,7 @@ export const CartProvider = ({ children, isAuthenticated }) => {
                         menuItemDetails,
                     },
                 });
+                dispatch({ type: CART_ACTIONS.SET_LOADING, payload: false });
                 toast.success(`Added ${quantity} item(s) to cart`);
             }
         } catch (error) {

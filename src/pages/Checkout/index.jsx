@@ -69,7 +69,7 @@ const Checkout = () => {
                 ...data,
             });
             toast.dismiss(loadingToast);
-
+            console.log(response);
             if (response.data.checkoutUrl) {
                 toast.loading('Redirecting to Stripe checkout...');
 

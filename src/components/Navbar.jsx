@@ -119,7 +119,7 @@ const Navbar = () => {
                         {['/', '/menu', '/about', '/contact'].map((path, i) => (
                             <li key={i}>
                                 <NavLink to={path} className={getMenuItemClasses}>
-                                    {['Home', 'Menu', 'About', 'Contact'][i]}
+                                    {['Home', 'Contact', 'About'][i]}
                                 </NavLink>
                             </li>
                         ))}

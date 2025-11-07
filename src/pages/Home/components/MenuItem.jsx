@@ -3,9 +3,8 @@ import { Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../../../components/Button';
 import { useCart } from '../../../hooks/useCart';
-
 function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
-    const { addToCart, getItemQuantity } = useCart();
+    const { addToCart, getItemQuantity, isLoading } = useCart();
     const discountedPrice = offer?.priceAfterDiscount ?? null;
     const [quantity, setQuantity] = useState(1);
 
@@ -34,7 +33,11 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
     };
 
     return (
-        <div className="card bg-base-100 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden">
+        <div
+            className={`card bg-base-100 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden ${
+                isLoading ? 'opacity-60 pointer-events-none' : ''
+            }`}
+        >
             <figure>
                 <img
                     src={imageUrl}
@@ -84,6 +87,7 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
                         <button
                             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                             className="p-1 text-orange-600 hover:text-orange-700 transition"
+                            disabled={isLoading}
                         >
                             <Minus size={18} />
                         </button>
@@ -93,6 +97,7 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
                         <button
                             onClick={() => setQuantity((q) => q + 1)}
                             className="p-1 text-orange-600 hover:text-orange-700 transition"
+                            disabled={isLoading}
                         >
                             <Plus size={18} />
                         </button>
@@ -100,10 +105,18 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
 
                     {/* Add to Cart Button */}
                     <Button
-                        className="w-full rounded-xl flex items-center justify-center gap-2"
+                        className={`w-full rounded-xl flex items-center justify-center gap-2 `}
                         onClick={handleAddToCart}
+                        disabled={isLoading}
                     >
-                        <ShoppingCart size={18} /> Add to Cart
+                        {isLoading ? (
+                            'Adding...'
+                        ) : (
+                            <>
+                                <ShoppingCart size={16} />
+                                Add to Cart
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>
