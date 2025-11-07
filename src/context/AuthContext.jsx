@@ -63,6 +63,7 @@ const authReducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload.user,
+                role: action.payload.role || state.role,
                 isLoading: false,
             };
 
@@ -80,23 +81,26 @@ export const AuthProvider = ({ children }) => {
         const fetchUserData = async () => {
             if (state.token) {
                 localStorage.setItem('userToken', state.token);
-                await apiClient
-                    .get('/user/me', {
+                try {
+                    const response = await apiClient.get('/user/me', {
                         headers: {
                             Authorization: `Bearer ${state.token}`,
                         },
-                    })
-                    .then((response) => {
-                        const userData = response.data.user;
-                        dispatch({
-                            type: AUTH_ACTIONS.SET_USER,
-                            payload: { user: userData, role: userData.role },
-                        });
                     });
+                    const userData = response.data.user;
+                    dispatch({
+                        type: AUTH_ACTIONS.SET_USER,
+                        payload: { user: userData, role: userData.role },
+                    });
+                } catch (error) {
+                    console.error('Failed to fetch user data:', error);
+                    dispatch({ type: AUTH_ACTIONS.LOGOUT });
+                }
             } else {
                 localStorage.removeItem('userToken');
             }
         };
+
         fetchUserData();
     }, [state.token]);
 
@@ -104,39 +108,25 @@ export const AuthProvider = ({ children }) => {
         try {
             dispatch({ type: AUTH_ACTIONS.LOGIN_START });
 
-            const response = await apiClient.post('/user/login', {
-                email,
-                password,
+            const response = await apiClient.post('/user/login', { email, password });
+            const data = response.data;
+
+            const userResponse = await apiClient.get('/user/me', {
+                headers: { Authorization: `Bearer ${data.userToken}` },
             });
 
-            const data = await response.data;
+            const userData = userResponse.data.user;
 
-            // const userResponse = await apiClient.get('/user/me', {
-            //     headers: {
-            //         Authorization: `Bearer ${data.userToken}`,
-            //     },
-            // });
-            // const userData = userResponse.data.user;
-            // localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('userToken', data.userToken);
 
-            apiClient
-                .get('/user/me', {
-                    headers: {
-                        Authorization: `Bearer ${data.userToken}`,
-                    },
-                })
-                .then((userResponse) => {
-                    const userData = userResponse.data.user;
-                    localStorage.setItem('user', JSON.stringify(userData));
-                    dispatch({
-                        type: AUTH_ACTIONS.LOGIN_SUCCESS,
-                        payload: {
-                            token: data.userToken,
-                            user: userData,
-                            role: userData.role,
-                        },
-                    });
-                });
+            dispatch({
+                type: AUTH_ACTIONS.LOGIN_SUCCESS,
+                payload: {
+                    token: data.userToken,
+                    user: userData,
+                    role: userData.role,
+                },
+            });
 
             return { success: true, data };
         } catch (error) {
@@ -158,12 +148,18 @@ export const AuthProvider = ({ children }) => {
     const logout = async (clearCartCallback = () => {}) => {
         localStorage.removeItem('userToken');
         localStorage.removeItem('user');
-        localStorage.removeItem('guestCart'); // Clear guest cart on logout
+        localStorage.removeItem('guestCart');
 
-        await apiClient.post('/user/logout');
+        try {
+            await apiClient.post('/user/logout');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+
         if (clearCartCallback && typeof clearCartCallback === 'function') {
             clearCartCallback();
         }
+
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
     };
 
@@ -173,16 +169,18 @@ export const AuthProvider = ({ children }) => {
             const data = response.data;
             return { success: true, data };
         } catch (error) {
-            return { success: false, error: error.response?.data?.message || error.message };
+            return {
+                success: false,
+                error: error.response?.data?.message || error.message,
+            };
         }
     };
 
     const setUser = (user) => {
         dispatch({
             type: AUTH_ACTIONS.SET_USER,
-            payload: { user },
+            payload: { user, role: user.role },
         });
-        localStorage.setItem('user', JSON.stringify(user));
     };
 
     const value = {

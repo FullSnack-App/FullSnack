@@ -8,13 +8,10 @@ const ProtectedRoute = ({ children }) => {
         return <div>Loading...</div>;
     }
 
-    if (!isAuthenticated || role !== 'admin') {
+    if (!isAuthenticated) {
         return <Navigate to={ROUTES.HOME} replace />;
     }
 
-    // if (!isAuthenticated) {
-    //     return <Navigate to={ROUTES.HOME} replace />;
-    // }
 
     return children;
 };

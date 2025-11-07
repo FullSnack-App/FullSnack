@@ -15,6 +15,8 @@ import OrderCancel from '../pages/OrderCancel';
 import Checkout from '../pages/Checkout';
 import OrderSuccess from '../pages/OrderSucces';
 import AdminLayout from './../layouts/Admin';
+import AdminOrders from './../pages/Admin/components/AdminOrders/AdminOrder';
+import ProtectedAminRoute from '../components/ProtectedAdmin';
 export const routes = (
     <Routes>
         <Route element={<MainLayout />}>
@@ -61,14 +63,16 @@ export const routes = (
         <Route
             path={ROUTES.ADMIN}
             element={
-                <ProtectedRoute>
+                <ProtectedAminRoute>
                     <AdminLayout />
-                </ProtectedRoute>
+                </ProtectedAminRoute>
             }
         >
             <Route index element={<AdminDashboard />} />
             <Route path="menu" element={<AdminMenuItem />} />
             <Route path="offers" element={<AdminOffers />} />
+            <Route path="orders" element={<AdminOrders />} />
+
         </Route>
 
         <Route path="*" element={<div>Page Not Found</div>} />

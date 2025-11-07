@@ -6,14 +6,17 @@ import { OffersProvider } from './context/OffersProvider';
 import { Toaster } from 'react-hot-toast';
 import { MenuProvider } from './context/MenuProvider';
 import AuthWrapper from './components/AuthWrapper';
+import { OrderProvider } from './context/OrderProvider';
 
 createRoot(document.getElementById('root')).render(
     <AuthProvider>
         <AuthWrapper>
             <MenuProvider>
                 <OffersProvider>
-                    <Toaster />
-                    <App />
+                    <OrderProvider>
+                        <Toaster />
+                        <App />
+                    </OrderProvider>
                 </OffersProvider>
             </MenuProvider>
         </AuthWrapper>
