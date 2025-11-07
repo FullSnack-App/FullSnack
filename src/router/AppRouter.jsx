@@ -15,7 +15,7 @@ import OrderCancel from '../pages/OrderCancel';
 import Checkout from '../pages/Checkout';
 import OrderSuccess from '../pages/OrderSucces';
 import AdminLayout from './../layouts/Admin';
-export const routes = (
+export const appRoutes = (
     <Routes>
         <Route element={<MainLayout />}>
             <Route path={ROUTES.HOME} element={<Home />} />

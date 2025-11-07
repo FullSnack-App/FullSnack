@@ -15,6 +15,7 @@ const initialState = {
     isAuthenticated: !!localStorage.getItem('userToken'),
     isLoading: false,
     error: null,
+    role: null,
 };
 
 const authReducer = (state, action) => {
@@ -31,6 +32,7 @@ const authReducer = (state, action) => {
                 ...state,
                 user: action.payload.user,
                 token: action.payload.token,
+                role: action.payload.role,
                 isAuthenticated: true,
                 isLoading: false,
                 error: null,
@@ -73,11 +75,27 @@ export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     useEffect(() => {
-        if (state.token) {
-            localStorage.setItem('userToken', state.token);
-        } else {
-            localStorage.removeItem('userToken');
-        }
+        const fetchUserData = async () => {
+            if (state.token) {
+                localStorage.setItem('userToken', state.token);
+                await apiClient
+                    .get('/user/me', {
+                        headers: {
+                            Authorization: `Bearer ${state.token}`,
+                        },
+                    })
+                    .then((response) => {
+                        const userData = response.data;
+                        dispatch({
+                            type: AUTH_ACTIONS.SET_USER,
+                            payload: { user: userData },
+                        });
+                    });
+            } else {
+                localStorage.removeItem('userToken');
+            }
+        };
+        fetchUserData();
     }, [state.token]);
 
     const login = async (email, password) => {
@@ -89,13 +107,23 @@ export const AuthProvider = ({ children }) => {
                 password,
             });
 
-            const data = response.data;
+            const data = await response.data;
+
+            const userResponse = await apiClient.get('/user/me', {
+                headers: {
+                    Authorization: `Bearer ${data.userToken}`,
+                },
+            });
+            const userData = userResponse.data;
+            console.log(userData);
+            localStorage.setItem('user', JSON.stringify(userData));
 
             dispatch({
                 type: AUTH_ACTIONS.LOGIN_SUCCESS,
                 payload: {
                     token: data.userToken,
-                    user: data.user || { email },
+                    user: userData,
+                    role: userData.role,
                 },
             });
 
