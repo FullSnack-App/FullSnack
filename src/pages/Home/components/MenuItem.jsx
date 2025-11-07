@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../../../components/Button';
 import { useCart } from '../../../hooks/useCart';
+
 function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
+    const navigate = useNavigate();
     const { addToCart, getItemQuantity, isLoading } = useCart();
     const discountedPrice = offer?.priceAfterDiscount ?? null;
     const [quantity, setQuantity] = useState(1);
@@ -32,9 +35,21 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
         setQuantity(1);
     };
 
+    const handleCardClick = (e) => {
+        // Prevent navigation if clicking on interactive elements
+        if (
+            e.target.closest('button') ||
+            e.target.closest('.quantity-controls')
+        ) {
+            return;
+        }
+        navigate(`/menu-item/${_id}`);
+    };
+
     return (
         <div
-            className={`card bg-base-100 dark:bg-gray-800 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden ${
+            onClick={handleCardClick}
+            className={`card bg-base-100 dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden cursor-pointer ${
                 isLoading ? 'opacity-60 pointer-events-none' : ''
             }`}
         >
@@ -83,7 +98,7 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
                 {/* Quantity + Add to Cart */}
                 <div className="card-actions flex flex-col items-center gap-3 mt-4">
                     {/* Quantity Controls */}
-                    <div className="flex items-center justify-center gap-3 bg-orange-50 dark:bg-gray-700 px-4 py-2 rounded-full">
+                    <div className="quantity-controls flex items-center justify-center gap-3 bg-orange-50 dark:bg-gray-700 px-4 py-2 rounded-full">
                         <button
                             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                             className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition"

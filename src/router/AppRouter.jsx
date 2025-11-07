@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
 import Offer from '../pages/Offer';
+import MenuItemDetails from '../pages/MenuItemDetails';
 import AdminDashboard from './../pages/Admin/Dashboard';
 import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuItem';
 import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
@@ -32,6 +33,7 @@ export const routes = (
         >
             <Route path={ROUTES.HOME} element={<Home />} />
             <Route path={ROUTES.OFFER} element={<Offer />} />
+            <Route path={ROUTES.MENU_ITEM} element={<MenuItemDetails />} />
             <Route path={ROUTES.CONTACT} element={<Contact />} />
             <Route path={ROUTES.ABOUT} element={<About />} />
 
