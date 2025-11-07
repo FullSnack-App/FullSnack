@@ -40,22 +40,22 @@ const ConfirmEmail = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] text-center">
             {status === 'loading' && (
-                <div className="text-lg font-medium">Confirming your email...</div>
+                <div className="text-lg font-medium dark:text-gray-200">Confirming your email...</div>
             )}
 
             {status === 'success' && (
                 <div className="flex flex-col items-center gap-3">
                     <CheckCircleIcon className="w-16 h-16 text-green-500" />
-                    <h1 className="text-2xl font-semibold">{message}</h1>
-                    <p className="text-gray-500">Redirecting to home page...</p>
+                    <h1 className="text-2xl font-semibold dark:text-gray-100">{message}</h1>
+                    <p className="text-gray-500 dark:text-gray-400">Redirecting to home page...</p>
                 </div>
             )}
 
             {status === 'error' && (
                 <div className="flex flex-col items-center gap-3">
                     <XCircleIcon className="w-16 h-16 text-red-500" />
-                    <h1 className="text-2xl font-semibold">Verification failed</h1>
-                    <p className="text-gray-500">{message}</p>
+                    <h1 className="text-2xl font-semibold dark:text-gray-100">Verification failed</h1>
+                    <p className="text-gray-500 dark:text-gray-400">{message}</p>
                 </div>
             )}
         </div>
