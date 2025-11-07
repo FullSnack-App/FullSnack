@@ -1,5 +1,5 @@
 import SkeletonMenuItem from '../../../components/SkeletonMenuItem';
-import MenuItem from './menuItem';
+import MenuItem from './MenuItem';
 
 function MenuList({ menulist = [], loading, className = '' }) {
     return (
