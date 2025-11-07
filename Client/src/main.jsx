@@ -1,12 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.jsx';
-import { AuthProvider } from './context/AuthContext.jsx';
-import { CartProvider } from './context/CartContext.jsx';
-import { OffersProvider } from './context/offersProvider.jsx';
+import App from './App';
+import { AuthProvider } from './context/AuthContext';
+import { OffersProvider } from './context/offersProvider';
 import { Toaster } from 'react-hot-toast';
-import { MenuProvider } from './context/menuProvider.jsx';
-import AuthWrapper from './components/AuthWrapper.jsx';
+import { MenuProvider } from './context/menuProvider';
+import AuthWrapper from './components/AuthWrapper';
 
 createRoot(document.getElementById('root')).render(
     <AuthProvider>

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import apiClient from '../config/axiosConfig';
 
-
 export const offersContext = createContext();
 
 export function OffersProvider({ children }) {
@@ -28,9 +27,7 @@ export function OffersProvider({ children }) {
     const getOfferById = useCallback((id) => offers.find((offer) => offer._id === id), [offers]);
 
     return (
-        <offersContext.Provider
-            value={{ offers, loading, getOfferById , setOffers }}
-        >
+        <offersContext.Provider value={{ offers, loading, getOfferById, setOffers }}>
             {children}
         </offersContext.Provider>
     );
