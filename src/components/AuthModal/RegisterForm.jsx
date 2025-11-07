@@ -97,7 +97,7 @@ const RegisterForm = ({ formData, handleInputChange, isLoading, error, onSwitchT
 
             {/* Footer Links */}
             <div className="mt-6 text-center space-y-3">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                     Already have an account?{' '}
                     <button
                         type="button"

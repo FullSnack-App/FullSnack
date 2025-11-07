@@ -22,70 +22,70 @@ import ProtectedUserRoute from '../components/protectedUser';
 import MailVerification from '../pages/MailVerification';
 
 export const routes = (
-  <Routes>
-    <Route
-      element={
-        <ProtectedUserRoute>
-          <MainLayout />
-        </ProtectedUserRoute>
-      }
-    >
-      <Route path={ROUTES.HOME} element={<Home />} />
-      <Route path={ROUTES.OFFER} element={<Offer />} />
-      <Route path={ROUTES.CONTACT} element={<Contact />} />
-      <Route path={ROUTES.ABOUT} element={<About />} />
+    <Routes>
+        <Route
+            element={
+                <ProtectedUserRoute>
+                    <MainLayout />
+                </ProtectedUserRoute>
+            }
+        >
+            <Route path={ROUTES.HOME} element={<Home />} />
+            <Route path={ROUTES.OFFER} element={<Offer />} />
+            <Route path={ROUTES.CONTACT} element={<Contact />} />
+            <Route path={ROUTES.ABOUT} element={<About />} />
 
-      <Route
-        path={ROUTES.PROFILE}
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTES.CHECKOUT}
-        element={
-          <ProtectedRoute>
-            <Checkout />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTES.ORDER_SUCCESS}
-        element={
-          <ProtectedRoute>
-            <OrderSuccess />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={ROUTES.ORDER_CANCEL}
-        element={
-          <ProtectedRoute>
-            <OrderCancel />
-          </ProtectedRoute>
-        }
-      />
-    </Route>
-<Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
-    {/* صفحات الأدمن */}
-    <Route
-      path={ROUTES.ADMIN}
-      element={
-        <ProtectedAminRoute>
-          <OrderProvider>
-            <AdminLayout />
-          </OrderProvider>
-        </ProtectedAminRoute>
-      }
-    >
-      <Route index element={<AdminDashboard />} />
-      <Route path="menu" element={<AdminMenuItem />} />
-      <Route path="offers" element={<AdminOffers />} />
-      <Route path="orders" element={<AdminOrders />} />
-    </Route>
+            <Route
+                path={ROUTES.PROFILE}
+                element={
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path={ROUTES.CHECKOUT}
+                element={
+                    <ProtectedRoute>
+                        <Checkout />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path={ROUTES.ORDER_SUCCESS}
+                element={
+                    <ProtectedRoute>
+                        <OrderSuccess />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path={ROUTES.ORDER_CANCEL}
+                element={
+                    <ProtectedRoute>
+                        <OrderCancel />
+                    </ProtectedRoute>
+                }
+            />
+        </Route>
+        <Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
+        {/* صفحات الأدمن */}
+        <Route
+            path={ROUTES.ADMIN}
+            element={
+                <ProtectedAminRoute>
+                    <OrderProvider>
+                        <AdminLayout />
+                    </OrderProvider>
+                </ProtectedAminRoute>
+            }
+        >
+            <Route index element={<AdminDashboard />} />
+            <Route path="menu" element={<AdminMenuItem />} />
+            <Route path="offers" element={<AdminOffers />} />
+            <Route path="orders" element={<AdminOrders />} />
+        </Route>
 
-    <Route path="*" element={<div>Page Not Found</div>} />
-  </Routes>
+        <Route path="*" element={<div>Page Not Found</div>} />
+    </Routes>
 );

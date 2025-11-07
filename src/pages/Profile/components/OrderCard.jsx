@@ -14,13 +14,13 @@ const OrderCard = ({ order }) => {
     };
 
     return (
-        <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow dark:bg-gray-800">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                 <div>
-                    <h3 className="font-semibold text-lg text-gray-800">
+                    <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-100">
                         Order #{order._id.slice(-8).toUpperCase()}
                     </h3>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                         {new Date(order.createdAt).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -45,7 +45,7 @@ const OrderCard = ({ order }) => {
             {/* Order Items */}
             {order.items && order.items.length > 0 && (
                 <div className="mt-4 space-y-2">
-                    <p className="text-sm font-semibold text-gray-700">Items:</p>
+                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Items:</p>
                     <div className="grid gap-2">
                         {order.items.map((item, idx) => (
                             <div
@@ -60,14 +60,14 @@ const OrderCard = ({ order }) => {
                                     />
                                 )}
                                 <div className="flex-1">
-                                    <p className="font-medium text-gray-800">
+                                    <p className="font-medium text-gray-800 dark:text-gray-200">
                                         {item.menuItem?.name || 'Unknown Item'}
                                     </p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
                                         Quantity: {item.quantity}
                                     </p>
                                 </div>
-                                <p className="font-semibold text-gray-800">
+                                <p className="font-semibold text-gray-800 dark:text-gray-200">
                                     ${(item.priceAtPurchase * item.quantity).toFixed(2)}
                                 </p>
                             </div>
@@ -78,12 +78,12 @@ const OrderCard = ({ order }) => {
 
             {/* Delivery Info */}
             {order.deliveryAddress && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                    <p className="text-sm text-gray-600">
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                         <span className="font-semibold">Delivery to:</span> {order.deliveryAddress}
                     </p>
                     {order.phoneNumber && (
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                             <span className="font-semibold">Phone:</span> {order.phoneNumber}
                         </p>
                     )}

@@ -23,7 +23,7 @@ function Offer() {
 
     if (!offer) {
         return (
-            <div className="text-center py-20 text-gray-600">
+            <div className="text-center py-20 text-gray-600 dark:text-gray-400">
                 <h2 className="text-3xl font-semibold mb-4">Offer not found</h2>
                 <button
                     onClick={() => navigate('/')}
@@ -57,7 +57,7 @@ function Offer() {
                 </div>
                 <div>
                     <h3 className="font-semibold mb-1 text-orange-800">Limited Time Offer</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                         This special offer is available for a limited time only. Order now to take
                         advantage of this amazing deal before it’s gone!
                     </p>
@@ -66,7 +66,7 @@ function Offer() {
 
             {/* Menu Items */}
             <div className="mt-10">
-                <h3 className="text-2xl font-bold mb-6 text-gray-800">Items in this Offer</h3>
+                <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Items in this Offer</h3>
                 <MenuList menulist={menuList} />
             </div>
         </section>

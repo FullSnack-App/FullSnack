@@ -26,7 +26,7 @@ function Menu() {
                 <h2 className="text-4xl font-bold mb-4">
                     Our <span className="text-orange-600">Menu</span>
                 </h2>
-                <p className="max-w-2xl mx-auto text-gray-600">
+                <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
                     Explore our delicious selection of dishes made with fresh ingredients and
                     authentic recipes
                 </p>

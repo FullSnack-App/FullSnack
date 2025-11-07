@@ -22,14 +22,14 @@ const CartSidebar = ({ isOpen, closeCart }) => {
             <div className="drawer-side z-50">
                 <label htmlFor="my-drawer-1" className="drawer-overlay" onClick={closeCart} />
                 <div
-                    className="bg-white h-full w-full md:max-w-md lg:max-w-lg flex flex-col"
+                    className="bg-white dark:bg-gray-800 h-full w-full md:max-w-md lg:max-w-lg flex flex-col"
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="flex items-center justify-between p-6 border-b">
-                        <h2 className="text-2xl font-bold text-gray-900">Cart</h2>
+                    <div className="flex items-center justify-between p-6 border-b dark:border-gray-700">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Cart</h2>
                         <button
                             onClick={closeCart}
-                            className="text-gray-500 hover:text-gray-700 transition-colors p-2"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors p-2"
                             aria-label="Close cart"
                         >
                             <svg
@@ -50,7 +50,7 @@ const CartSidebar = ({ isOpen, closeCart }) => {
 
                     <div className="flex-1 overflow-y-auto p-6">
                         {items.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                            <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
                                 <svg
                                     className="w-16 h-16 mb-4"
                                     fill="none"
@@ -76,27 +76,27 @@ const CartSidebar = ({ isOpen, closeCart }) => {
                     </div>
 
                     {items.length > 0 && (
-                        <div className="border-t bg-white p-6 space-y-4">
+                        <div className="border-t dark:border-gray-700 bg-white dark:bg-gray-800 p-6 space-y-4">
                             <div className="space-y-2">
-                                <div className="flex justify-between items-center text-gray-700">
+                                <div className="flex justify-between items-center text-gray-700 dark:text-gray-300">
                                     <span>Subtotal</span>
                                     <span className="font-semibold">${subtotal.toFixed(2)}</span>
                                 </div>
 
-                                <div className="flex justify-between items-center text-gray-700">
+                                <div className="flex justify-between items-center text-gray-700 dark:text-gray-300">
                                     <span>Delivery Fee</span>
                                     <span
                                         className={`font-semibold ${
-                                            deliveryFee === 0 ? 'text-green-600' : ''
+                                            deliveryFee === 0 ? 'text-green-600 dark:text-green-400' : ''
                                         }`}
                                     >
                                         {deliveryFee === 0 ? 'FREE' : `$${deliveryFee.toFixed(2)}`}
                                     </span>
                                 </div>
 
-                                <div className="flex justify-between items-center text-lg font-bold pt-3 border-t">
-                                    <span className="text-gray-900">Total</span>
-                                    <span className="text-blue-600">${total.toFixed(2)}</span>
+                                <div className="flex justify-between items-center text-lg font-bold pt-3 border-t dark:border-gray-700">
+                                    <span className="text-gray-900 dark:text-gray-100">Total</span>
+                                    <span className="text-blue-600 dark:text-blue-400">${total.toFixed(2)}</span>
                                 </div>
                             </div>
 
