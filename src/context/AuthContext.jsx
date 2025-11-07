@@ -21,11 +21,7 @@ const initialState = {
 const authReducer = (state, action) => {
     switch (action.type) {
         case AUTH_ACTIONS.LOGIN_START:
-            return {
-                ...state,
-                isLoading: true,
-                error: null,
-            };
+            return { ...state, isLoading: true, error: null };
 
         case AUTH_ACTIONS.LOGIN_SUCCESS:
             return {
@@ -83,9 +79,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('userToken', state.token);
                 try {
                     const response = await apiClient.get('/user/me', {
-                        headers: {
-                            Authorization: `Bearer ${state.token}`,
-                        },
+                        headers: { Authorization: `Bearer ${state.token}` },
                     });
                     const userData = response.data.user;
                     dispatch({
@@ -103,6 +97,32 @@ export const AuthProvider = ({ children }) => {
 
         fetchUserData();
     }, [state.token]);
+
+    const logout = async (clearCartCallback = () => { }) => {
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('user');
+        localStorage.removeItem('guestCart');
+
+        try {
+            await apiClient.post('/user/logout');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+
+        if (clearCartCallback && typeof clearCartCallback === 'function') {
+            clearCartCallback();
+        }
+
+        dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    };
+
+    const logoutAdmin = () => {
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('user');
+        localStorage.removeItem('guestCart');
+
+        dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    };
 
     const login = async (email, password) => {
         try {
@@ -145,24 +165,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = async (clearCartCallback = () => {}) => {
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('guestCart');
-
-        try {
-            await apiClient.post('/user/logout');
-        } catch (error) {
-            console.error('Logout error:', error);
-        }
-
-        if (clearCartCallback && typeof clearCartCallback === 'function') {
-            clearCartCallback();
-        }
-
-        dispatch({ type: AUTH_ACTIONS.LOGOUT });
-    };
-
     const register = async (userData) => {
         try {
             const response = await apiClient.post('/user/register', userData);
@@ -187,6 +189,7 @@ export const AuthProvider = ({ children }) => {
         ...state,
         login,
         logout,
+        logoutAdmin,
         register,
         setUser,
     };
