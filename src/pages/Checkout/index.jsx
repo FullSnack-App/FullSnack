@@ -90,9 +90,9 @@ const Checkout = () => {
         }
     };
 
-    if (loading) return <div className="text-center py-20">Loading your cart...</div>;
+    if (loading) return <div className="h-83 text-center py-20">Loading your cart...</div>;
     if (items.length === 0)
-        return <div className="text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
+        return <div className="h-83 text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
