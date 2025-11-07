@@ -13,10 +13,8 @@ createRoot(document.getElementById('root')).render(
         <AuthWrapper>
             <MenuProvider>
                 <OffersProvider>
-                    <OrderProvider>
                         <Toaster />
                         <App />
-                    </OrderProvider>
                 </OffersProvider>
             </MenuProvider>
         </AuthWrapper>
