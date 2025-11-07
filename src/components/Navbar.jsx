@@ -86,6 +86,27 @@ const Navbar = () => {
         logout();
         navigate('/');
     };
+
+    const scrollToMenu = () => {
+        // If not on home page, navigate to home first
+        if (window.location.pathname !== '/') {
+            navigate('/', { state: { scrollToMenu: true } });
+            // Wait for navigation then scroll
+            setTimeout(() => {
+                const menuSection = document.getElementById('menu');
+                if (menuSection) {
+                    menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        } else {
+            // If on home page, scroll to menu section
+            const menuSection = document.getElementById('menu');
+            if (menuSection) {
+                menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    };
+
     const routesLinks = ['/', '/contact', '/about'];
     const routes = ['Home', 'Contact', 'About'];
     if (role === 'admin') {
@@ -113,10 +134,23 @@ const Navbar = () => {
                             tabIndex={-1}
                             className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white dark:bg-gray-800"
                         >
-                            {routesLinks.map((path, i) => (
-                                <li key={i}>
+                            <li>
+                                <NavLink to={routesLinks[0]} className={getMenuItemClasses}>
+                                    {routes[0]}
+                                </NavLink>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={scrollToMenu}
+                                    className="hover:text-primary transition-colors duration-200"
+                                >
+                                    Menu
+                                </button>
+                            </li>
+                            {routesLinks.slice(1).map((path, i) => (
+                                <li key={i + 1}>
                                     <NavLink to={path} className={getMenuItemClasses}>
-                                        {routes[i]}
+                                        {routes[i + 1]}
                                     </NavLink>
                                 </li>
                             ))}
@@ -129,10 +163,23 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-lg">
-                        {routesLinks.map((path, i) => (
-                            <li key={i}>
+                        <li>
+                            <NavLink to={routesLinks[0]} className={getMenuItemClasses}>
+                                {routes[0]}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <button
+                                onClick={scrollToMenu}
+                                className="hover:text-primary transition-colors duration-200 text-xl"
+                            >
+                                Menu
+                            </button>
+                        </li>
+                        {routesLinks.slice(1).map((path, i) => (
+                            <li key={i + 1}>
                                 <NavLink to={path} className={getMenuItemClasses}>
-                                    {routes[i]}
+                                    {routes[i + 1]}
                                 </NavLink>
                             </li>
                         ))}

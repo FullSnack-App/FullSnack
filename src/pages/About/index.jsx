@@ -1,9 +1,21 @@
 import React from "react";
 import image from '../../assets/fullSnack.png';
 import chief from '../../assets/Chief.png';
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function About() {
+  const navigate = useNavigate();
+
+  const handleExploreMenu = () => {
+    navigate('/', { state: { scrollToMenu: true } });
+    setTimeout(() => {
+      const menuSection = document.getElementById('menu');
+      if (menuSection) {
+        menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-base-100 dark:bg-gray-900 text-base-content dark:text-gray-100">
       {/* Header Section */}
@@ -34,7 +46,7 @@ export default function About() {
             From hand-crafted burgers to delicious desserts, every item on our
             menu is made with care and served with a smile.
           </p>
-          <Link to={"/menu"} className="btn btn-primary">Explore Our Menu</Link>
+          <button onClick={handleExploreMenu} className="btn btn-primary">Explore Our Menu</button>
         </div>
       </section>
 
