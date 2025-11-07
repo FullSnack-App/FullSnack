@@ -3,46 +3,69 @@ import { useParams, useNavigate } from 'react-router';
 import { Star, Plus, Minus, ShoppingCart, ArrowLeft, StarIcon } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 import { useMenu } from '../../hooks/useMenu';
+import { useAuth } from '../../hooks/useAuth';
+import commentServices from '../../services/commentServices';
+import apiClient from '../../config/axiosConfig';
 import toast from 'react-hot-toast';
 
 const MenuItemDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToCart, getItemQuantity, isLoading: cartLoading } = useCart();
-    const { getMenuItemById, loading: menuLoading } = useMenu();
+    const { getMenuItemById, loading: menuLoading, setMenuItems, menuItems } = useMenu();
+    const { isAuthenticated, user } = useAuth();
     
     const [quantity, setQuantity] = useState(1);
     const [menuItem, setMenuItem] = useState(null);
-    const [reviews] = useState([
-        {
-            id: 1,
-            userName: 'John Doe',
-            rating: 5,
-            comment: 'Absolutely delicious! The best I\'ve ever had.',
-            date: '2025-11-05',
-        },
-        {
-            id: 2,
-            userName: 'Sarah Smith',
-            rating: 4,
-            comment: 'Great taste and quality. Highly recommend!',
-            date: '2025-11-03',
-        },
-        {
-            id: 3,
-            userName: 'Mike Johnson',
-            rating: 5,
-            comment: 'Perfect portion size and amazing flavor.',
-            date: '2025-11-01',
-        },
-    ]);
+    const [reviews, setReviews] = useState([]);
+    const [loadingReviews, setLoadingReviews] = useState(true);
+    const [showReviewForm, setShowReviewForm] = useState(false);
+    const [reviewForm, setReviewForm] = useState({
+        content: '',
+        rating: 5,
+    });
+    const [submittingReview, setSubmittingReview] = useState(false);
 
     useEffect(() => {
         const item = getMenuItemById(id);
         if (item) {
             setMenuItem(item);
         }
-    }, [id, getMenuItemById]);
+    }, [id, getMenuItemById, menuItems]); // Add menuItems dependency to update when it changes
+
+    // Fetch reviews for this menu item
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try {
+                setLoadingReviews(true);
+                const data = await commentServices.getCommentsByMenuItem(id);
+                console.log('Fetched reviews data:', data);
+                
+                // Check if data is an object with comments
+                if (data && typeof data === 'object' && !Array.isArray(data)) {
+                    // API returns object with comments array
+                    setReviews(data.comments || []);
+                } else if (Array.isArray(data)) {
+                    // API returns array directly
+                    setReviews(data);
+                } else {
+                    // Unknown format
+                    console.warn('Unknown response format:', data);
+                    setReviews([]);
+                }
+            } catch (error) {
+                console.error('Failed to fetch reviews:', error);
+                toast.error('Failed to load reviews');
+                setReviews([]);
+            } finally {
+                setLoadingReviews(false);
+            }
+        };
+
+        if (id && menuItem) {
+            fetchReviews();
+        }
+    }, [id, menuItem]);
 
     const cartQuantity = getItemQuantity(id);
 
@@ -64,6 +87,106 @@ const MenuItemDetails = () => {
 
         await addToCart(menuItem._id, quantity, menuItemDetails);
         setQuantity(1);
+    };
+
+    const handleSubmitReview = async (e) => {
+        e.preventDefault();
+
+        if (!isAuthenticated) {
+            toast.error('Please login to submit a review');
+            return;
+        }
+
+        if (!reviewForm.content.trim()) {
+            toast.error('Please write a review');
+            return;
+        }
+
+        try {
+            setSubmittingReview(true);
+            const submitResponse = await commentServices.createComment({
+                userId: user._id,
+                menuItemId: id,
+                content: reviewForm.content,
+                rating: reviewForm.rating,
+            });
+
+            console.log('Review submitted:', submitResponse);
+            
+            // Reset form
+            setReviewForm({ content: '', rating: 5 });
+            setShowReviewForm(false);
+            
+            // Add a delay to ensure backend has updated the menuItem.rate
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Refresh reviews and menuItem from backend
+            try {
+                // Fetch updated reviews
+                const reviewsData = await commentServices.getCommentsByMenuItem(id);
+                console.log('Fetched reviews after submit:', reviewsData);
+                
+                // Update reviews
+                if (reviewsData && typeof reviewsData === 'object' && !Array.isArray(reviewsData)) {
+                    setReviews(reviewsData.comments || []);
+                } else if (Array.isArray(reviewsData)) {
+                    setReviews(reviewsData);
+                }
+                
+                // Fetch ALL menu items to get the updated rate
+                const allMenuItemsResponse = await apiClient.get('/menu-items');
+                console.log('Fetched all menu items response:', allMenuItemsResponse.data);
+                
+                if (allMenuItemsResponse.data && allMenuItemsResponse.data.items) {
+                    const allItems = allMenuItemsResponse.data.items;
+                    
+                    // Find the updated menu item
+                    const updatedMenuItem = allItems.find(item => item._id === id);
+                    
+                    if (updatedMenuItem) {
+                        console.log('Old rate:', menuItem.rate);
+                        console.log('New rate from backend:', updatedMenuItem.rate);
+                        
+                        // Update local state
+                        setMenuItem({ ...updatedMenuItem });
+                        
+                        // Update global context
+                        if (setMenuItems) {
+                            setMenuItems(allItems);
+                            console.log('Global menu context updated with all items');
+                        }
+                    } else {
+                        console.error('Could not find updated menuItem in response');
+                    }
+                } else {
+                    console.error('Unexpected response format:', allMenuItemsResponse.data);
+                }
+            } catch (refreshError) {
+                console.error('Failed to refresh data:', refreshError);
+                console.error('Error response:', refreshError.response);
+                // Add the new review manually if refresh fails
+                const newReview = {
+                    _id: submitResponse._id,
+                    userId: {
+                        _id: user._id,
+                        fullName: user.fullName,
+                    },
+                    menuItemId: id,
+                    content: submitResponse.content,
+                    rating: submitResponse.rating,
+                    createdAt: submitResponse.createdAt || new Date().toISOString(),
+                };
+                setReviews([newReview, ...reviews]);
+            }
+            
+            toast.success('Review submitted successfully!');
+            
+        } catch (error) {
+            console.error('Failed to submit review:', error);
+            toast.error(error.response?.data?.message || 'Failed to submit review');
+        } finally {
+            setSubmittingReview(false);
+        }
     };
 
     if (menuLoading || !menuItem) {
@@ -130,11 +253,11 @@ const MenuItemDetails = () => {
                             <div className="flex items-center gap-1">
                                 <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
                                 <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                    {menuItem.rate}
+                                    {menuItem.rate ? menuItem.rate.toFixed(1) : '0.0'}
                                 </span>
                             </div>
                             <span className="text-gray-500 dark:text-gray-400">
-                                ({reviews.length} reviews)
+                                ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
                             </span>
                         </div>
 
@@ -212,22 +335,83 @@ const MenuItemDetails = () => {
 
                 {/* Reviews Section */}
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                        Customer Reviews
-                    </h2>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                            Customer Reviews
+                        </h2>
+                        {isAuthenticated && (
+                            <button
+                                onClick={() => setShowReviewForm(!showReviewForm)}
+                                className="btn btn-primary"
+                            >
+                                {showReviewForm ? 'Cancel' : 'Write a Review'}
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Review Form */}
+                    {showReviewForm && (
+                        <form onSubmit={handleSubmitReview} className="mb-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Your Rating
+                                </label>
+                                <div className="flex gap-2">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <button
+                                            key={star}
+                                            type="button"
+                                            onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                                            className="focus:outline-none"
+                                        >
+                                            <Star
+                                                className={`w-8 h-8 transition-colors ${
+                                                    star <= reviewForm.rating
+                                                        ? 'text-yellow-500 fill-yellow-500'
+                                                        : 'text-gray-300 dark:text-gray-600'
+                                                }`}
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Your Review
+                                </label>
+                                <textarea
+                                    value={reviewForm.content}
+                                    onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                                    rows="4"
+                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                                    placeholder="Share your experience with this item..."
+                                    required
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={submittingReview}
+                                className="btn btn-primary"
+                            >
+                                {submittingReview ? 'Submitting...' : 'Submit Review'}
+                            </button>
+                        </form>
+                    )}
 
                     {/* Rating Summary */}
                     <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
                         <div className="text-center">
                             <div className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                                {menuItem.rate}
+                                {menuItem.rate ? menuItem.rate.toFixed(1) : '0.0'}
                             </div>
                             <div className="flex items-center gap-1 mb-1">
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
                                         className={`w-5 h-5 ${
-                                            i < Math.floor(menuItem.rate)
+                                            i < Math.floor(menuItem.rate || 0)
                                                 ? 'text-yellow-500 fill-yellow-500'
                                                 : 'text-gray-300 dark:text-gray-600'
                                         }`}
@@ -235,50 +419,63 @@ const MenuItemDetails = () => {
                                 ))}
                             </div>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {reviews.length} reviews
+                                {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
                             </p>
                         </div>
                     </div>
 
                     {/* Reviews List */}
-                    <div className="space-y-6">
-                        {reviews.map((review) => (
-                            <div
-                                key={review.id}
-                                className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-0"
-                            >
-                                <div className="flex items-start justify-between mb-3">
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">
-                                            {review.userName}
-                                        </h4>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                                            {new Date(review.date).toLocaleDateString('en-US', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric',
-                                            })}
-                                        </p>
+                    {loadingReviews ? (
+                        <div className="text-center py-8">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
+                            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading reviews...</p>
+                        </div>
+                    ) : reviews.length === 0 ? (
+                        <div className="text-center py-8">
+                            <p className="text-gray-500 dark:text-gray-400">
+                                No reviews yet. Be the first to review this item!
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-6">
+                            {reviews.map((review) => (
+                                <div
+                                    key={review._id}
+                                    className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-0"
+                                >
+                                    <div className="flex items-start justify-between mb-3">
+                                        <div>
+                                            <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                                                {review.userId?.fullName || 'Anonymous User'}
+                                            </h4>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                {new Date(review.createdAt).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                })}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star
+                                                    key={i}
+                                                    className={`w-4 h-4 ${
+                                                        i < review.rating
+                                                            ? 'text-yellow-500 fill-yellow-500'
+                                                            : 'text-gray-300 dark:text-gray-600'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star
-                                                key={i}
-                                                className={`w-4 h-4 ${
-                                                    i < review.rating
-                                                        ? 'text-yellow-500 fill-yellow-500'
-                                                        : 'text-gray-300 dark:text-gray-600'
-                                                }`}
-                                            />
-                                        ))}
-                                    </div>
+                                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                        {review.content}
+                                    </p>
                                 </div>
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                                    {review.comment}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
