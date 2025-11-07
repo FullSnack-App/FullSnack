@@ -19,6 +19,7 @@ import AdminOrders from './../pages/Admin/components/AdminOrders/AdminOrder';
 import ProtectedAminRoute from '../components/ProtectedAdmin';
 import { OrderProvider } from '../context/OrderProvider';
 import ProtectedUserRoute from '../components/protectedUser';
+import MailVerification from '../pages/MailVerification';
 
 export const routes = (
   <Routes>
@@ -67,7 +68,7 @@ export const routes = (
         }
       />
     </Route>
-
+<Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
     {/* صفحات الأدمن */}
     <Route
       path={ROUTES.ADMIN}

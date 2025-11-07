@@ -2,9 +2,12 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import apiClient from '../../config/axiosConfig';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 const Checkout = () => {
     // 🛒 Cart Data from backend
+      const navigate = useNavigate();
+
     const [items, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -77,7 +80,7 @@ const Checkout = () => {
             } else {
                 toast.success('Order placed successfully!');
                 setTimeout(() => {
-                    window.location.href = `/order-success/${response.data.order._id}`;
+                    navigate(`/order-success/${response.data.order._id}`);
                 }, 500);
             }
         } catch (error) {
@@ -87,9 +90,9 @@ const Checkout = () => {
         }
     };
 
-    if (loading) return <div className="text-center py-20">Loading your cart...</div>;
+    if (loading) return <div className="h-83 text-center py-20">Loading your cart...</div>;
     if (items.length === 0)
-        return <div className="text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
+        return <div className="h-83 text-center py-20 text-gray-600">🛒 Your cart is empty.</div>;
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">
