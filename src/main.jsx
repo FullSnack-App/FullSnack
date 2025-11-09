@@ -15,10 +15,8 @@ createRoot(document.getElementById('root')).render(
             <AuthWrapper>
                 <MenuProvider>
                     <OffersProvider>
-                        <OrderProvider>
-                            <Toaster />
-                            <App />
-                        </OrderProvider>
+                        <Toaster />
+                        <App />
                     </OffersProvider>
                 </MenuProvider>
             </AuthWrapper>

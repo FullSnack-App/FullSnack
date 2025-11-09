@@ -116,14 +116,6 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
     };
 
-    const logoutAdmin = () => {
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('guestCart');
-
-        dispatch({ type: AUTH_ACTIONS.LOGOUT });
-    };
-
     const login = async (email, password) => {
         try {
             dispatch({ type: AUTH_ACTIONS.LOGIN_START });
@@ -201,7 +193,6 @@ export const AuthProvider = ({ children }) => {
         ...state,
         login,
         logout,
-        logoutAdmin,
         register,
         setUser,
     };

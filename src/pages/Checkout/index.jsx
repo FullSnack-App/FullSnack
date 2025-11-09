@@ -7,7 +7,7 @@ import { useCart } from '../../hooks/useCart';
 
 const Checkout = () => {
     // 🛒 Cart Data from backend
-      const navigate = useNavigate();
+    const navigate = useNavigate();
     const { clearCart } = useCart();
 
     const [items, setCartItems] = useState([]);
@@ -17,7 +17,6 @@ const Checkout = () => {
         const fetchCart = async () => {
             try {
                 const response = await apiClient.get('/cart');
-                console.log(response.data.cart.items);
                 setCartItems(response.data.cart.items || []);
             } catch (error) {
                 console.error('❌ Failed to fetch cart:', error);
@@ -74,7 +73,6 @@ const Checkout = () => {
                 ...data,
             });
             toast.dismiss(loadingToast);
-            console.log(response);
             if (response.data.checkoutUrl) {
                 toast.loading('Redirecting to Stripe checkout...');
 
@@ -96,12 +94,18 @@ const Checkout = () => {
 
     if (loading) return <div className="h-83 text-center py-20">Loading your cart...</div>;
     if (items.length === 0)
-        return <div className="h-83 text-center py-20 text-gray-600 dark:text-gray-400">🛒 Your cart is empty.</div>;
+        return (
+            <div className="h-83 text-center py-20 text-gray-600 dark:text-gray-400">
+                🛒 Your cart is empty.
+            </div>
+        );
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
             <div className="container mx-auto px-4">
-                <h1 className="text-4xl font-bold mb-10 text-gray-800 dark:text-gray-100 text-center">Checkout</h1>
+                <h1 className="text-4xl font-bold mb-10 text-gray-800 dark:text-gray-100 text-center">
+                    Checkout
+                </h1>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -134,7 +138,9 @@ const Checkout = () => {
                                 </div>
 
                                 <div>
-                                    <label className="label font-medium text-gray-600 dark:text-gray-300">Email</label>
+                                    <label className="label font-medium text-gray-600 dark:text-gray-300">
+                                        Email
+                                    </label>
                                     <input
                                         {...register('customerEmail', {
                                             required: 'Email is required',
@@ -294,7 +300,9 @@ const Checkout = () => {
 
                             <div
                                 className={`flex justify-between ${
-                                    totalSaved > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-gray-800 dark:text-gray-200'
+                                    totalSaved > 0
+                                        ? 'text-orange-600 dark:text-orange-400'
+                                        : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 <span>Total</span>

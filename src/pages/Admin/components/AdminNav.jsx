@@ -4,11 +4,11 @@ import { useAuth } from '../../../hooks/useAuth';
 
 export default function AdminNav() {
     const navigate = useNavigate();
-    const { logoutAdmin } = useAuth();
+    const { logout } = useAuth();
 
     const handleLogout = () => {
-        logoutAdmin();
-  window.location.href = '/';
+        logout();
+        navigate('/');
     };
     return (
         <nav className="bg-[#2E2A2A] text-white flex justify-between items-center px-6 py-4 shadow-md">

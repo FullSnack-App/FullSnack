@@ -5,22 +5,15 @@ import Contact from '../pages/Contact';
 import About from '../pages/About';
 import Offer from '../pages/Offer';
 import MenuItemDetails from '../pages/MenuItemDetails';
-import AdminDashboard from './../pages/Admin/Dashboard';
-import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuItem';
-import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
-
 import { ROUTES } from '../config/routes';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Profile from '../pages/Profile';
 import OrderCancel from '../pages/OrderCancel';
 import Checkout from '../pages/Checkout';
 import OrderSuccess from '../pages/OrderSucces';
-import AdminLayout from './../layouts/Admin';
-import AdminOrders from './../pages/Admin/components/AdminOrders/AdminOrder';
-import ProtectedAminRoute from '../components/ProtectedAdmin';
-import { OrderProvider } from '../context/OrderProvider';
 import ProtectedUserRoute from '../components/protectedUser';
 import MailVerification from '../pages/MailVerification';
+import { adminRoutes } from './AdminRouter';
 
 export const routes = (
     <Routes>
@@ -71,21 +64,8 @@ export const routes = (
             />
         </Route>
         <Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
-        <Route
-            path={ROUTES.ADMIN}
-            element={
-                <ProtectedAminRoute>
-                    <OrderProvider>
-                        <AdminLayout />
-                    </OrderProvider>
-                </ProtectedAminRoute>
-            }
-        >
-            <Route index element={<AdminDashboard />} />
-            <Route path="menu" element={<AdminMenuItem />} />
-            <Route path="offers" element={<AdminOffers />} />
-            <Route path="orders" element={<AdminOrders />} />
-        </Route>
+
+        {adminRoutes}
 
         <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>

@@ -14,7 +14,7 @@ const MenuItemDetails = () => {
     const { addToCart, getItemQuantity, isLoading: cartLoading } = useCart();
     const { getMenuItemById, loading: menuLoading, setMenuItems, menuItems } = useMenu();
     const { isAuthenticated, user } = useAuth();
-    
+
     const [quantity, setQuantity] = useState(1);
     const [menuItem, setMenuItem] = useState(null);
     const [reviews, setReviews] = useState([]);
@@ -39,8 +39,7 @@ const MenuItemDetails = () => {
             try {
                 setLoadingReviews(true);
                 const data = await commentServices.getCommentsByMenuItem(id);
-                console.log('Fetched reviews data:', data);
-                
+
                 // Check if data is an object with comments
                 if (data && typeof data === 'object' && !Array.isArray(data)) {
                     // API returns object with comments array
@@ -50,11 +49,10 @@ const MenuItemDetails = () => {
                     setReviews(data);
                 } else {
                     // Unknown format
-                    console.warn('Unknown response format:', data);
+
                     setReviews([]);
                 }
             } catch (error) {
-                console.error('Failed to fetch reviews:', error);
                 toast.error('Failed to load reviews');
                 setReviews([]);
             } finally {
@@ -111,59 +109,47 @@ const MenuItemDetails = () => {
                 rating: reviewForm.rating,
             });
 
-            console.log('Review submitted:', submitResponse);
-            
             // Reset form
             setReviewForm({ content: '', rating: 5 });
             setShowReviewForm(false);
-            
+
             // Add a delay to ensure backend has updated the menuItem.rate
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
             // Refresh reviews and menuItem from backend
             try {
                 // Fetch updated reviews
                 const reviewsData = await commentServices.getCommentsByMenuItem(id);
-                console.log('Fetched reviews after submit:', reviewsData);
-                
+
                 // Update reviews
                 if (reviewsData && typeof reviewsData === 'object' && !Array.isArray(reviewsData)) {
                     setReviews(reviewsData.comments || []);
                 } else if (Array.isArray(reviewsData)) {
                     setReviews(reviewsData);
                 }
-                
+
                 // Fetch ALL menu items to get the updated rate
                 const allMenuItemsResponse = await apiClient.get('/menu-items');
-                console.log('Fetched all menu items response:', allMenuItemsResponse.data);
-                
+
                 if (allMenuItemsResponse.data && allMenuItemsResponse.data.items) {
                     const allItems = allMenuItemsResponse.data.items;
-                    
+
                     // Find the updated menu item
-                    const updatedMenuItem = allItems.find(item => item._id === id);
-                    
+                    const updatedMenuItem = allItems.find((item) => item._id === id);
+
                     if (updatedMenuItem) {
-                        console.log('Old rate:', menuItem.rate);
-                        console.log('New rate from backend:', updatedMenuItem.rate);
-                        
                         // Update local state
                         setMenuItem({ ...updatedMenuItem });
-                        
+
                         // Update global context
                         if (setMenuItems) {
                             setMenuItems(allItems);
-                            console.log('Global menu context updated with all items');
                         }
                     } else {
-                        console.error('Could not find updated menuItem in response');
                     }
                 } else {
-                    console.error('Unexpected response format:', allMenuItemsResponse.data);
                 }
             } catch (refreshError) {
-                console.error('Failed to refresh data:', refreshError);
-                console.error('Error response:', refreshError.response);
                 // Add the new review manually if refresh fails
                 const newReview = {
                     _id: submitResponse._id,
@@ -178,11 +164,9 @@ const MenuItemDetails = () => {
                 };
                 setReviews([newReview, ...reviews]);
             }
-            
+
             toast.success('Review submitted successfully!');
-            
         } catch (error) {
-            console.error('Failed to submit review:', error);
             toast.error(error.response?.data?.message || 'Failed to submit review');
         } finally {
             setSubmittingReview(false);
@@ -351,7 +335,10 @@ const MenuItemDetails = () => {
 
                     {/* Review Form */}
                     {showReviewForm && (
-                        <form onSubmit={handleSubmitReview} className="mb-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                        <form
+                            onSubmit={handleSubmitReview}
+                            className="mb-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                        >
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Your Rating
@@ -361,7 +348,9 @@ const MenuItemDetails = () => {
                                         <button
                                             key={star}
                                             type="button"
-                                            onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                                            onClick={() =>
+                                                setReviewForm({ ...reviewForm, rating: star })
+                                            }
                                             className="focus:outline-none"
                                         >
                                             <Star
@@ -382,7 +371,9 @@ const MenuItemDetails = () => {
                                 </label>
                                 <textarea
                                     value={reviewForm.content}
-                                    onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                                    onChange={(e) =>
+                                        setReviewForm({ ...reviewForm, content: e.target.value })
+                                    }
                                     rows="4"
                                     className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                                     placeholder="Share your experience with this item..."
@@ -428,7 +419,9 @@ const MenuItemDetails = () => {
                     {loadingReviews ? (
                         <div className="text-center py-8">
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
-                            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading reviews...</p>
+                            <p className="mt-4 text-gray-600 dark:text-gray-400">
+                                Loading reviews...
+                            </p>
                         </div>
                     ) : reviews.length === 0 ? (
                         <div className="text-center py-8">
@@ -449,11 +442,14 @@ const MenuItemDetails = () => {
                                                 {review.userId?.fullName || 'Anonymous User'}
                                             </h4>
                                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                {new Date(review.createdAt).toLocaleDateString('en-US', {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric',
-                                                })}
+                                                {new Date(review.createdAt).toLocaleDateString(
+                                                    'en-US',
+                                                    {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    }
+                                                )}
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-1">

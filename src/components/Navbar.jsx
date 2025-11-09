@@ -83,7 +83,6 @@ const Navbar = () => {
         'rounded-lg'
     );
     const closeCart = useCallback(() => {
-        console.log('hi');
         setIsCartOpen(false);
     }, []);
 

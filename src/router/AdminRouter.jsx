@@ -5,15 +5,24 @@ import AdminMenuItem from '../pages/Admin/components/AdminMenuItems/AdminMenuIte
 import AdminOffers from '../pages/Admin/components/AdminOffers/AdminOffers';
 
 import AdminLayout from './../layouts/Admin';
+import { ROUTES } from '../config/routes';
+import ProtectedAminRoute from '../components/ProtectedAdmin';
+import AdminOrder from '../pages/Admin/components/AdminOrders/AdminOrder';
+import { OrderProvider } from '../context/OrderProvider';
 export const adminRoutes = (
-    <Routes>
-        <Route path="admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="menu" element={<AdminMenuItem />} />
-            <Route path="offers" element={<AdminOffers />} />
-        </Route>
-
-        {/* Redirect anything unknown to /admin */}
-        <Route path="*" element={<Navigate to="/admin" replace />} />
-    </Routes>
+    <Route
+        path={ROUTES.ADMIN}
+        element={
+            <ProtectedAminRoute>
+                <OrderProvider>
+                    <AdminLayout />
+                </OrderProvider>
+            </ProtectedAminRoute>
+        }
+    >
+        <Route index element={<AdminDashboard />} />
+        <Route path="menu" element={<AdminMenuItem />} />
+        <Route path="offers" element={<AdminOffers />} />
+        <Route path="orders" element={<AdminOrder />} />
+    </Route>
 );
