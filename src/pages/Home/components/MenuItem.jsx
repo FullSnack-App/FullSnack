@@ -88,10 +88,10 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
                     {offer ? (
                         <>
                             <span className="line-through text-gray-400 dark:text-gray-500 mr-2">${price}</span>
-                            <span>${discountedPrice}</span>
+                            <span>${discountedPrice.toFixed(2)}</span>
                         </>
                     ) : (
-                        <>${price}</>
+                        <>${price.toFixed(2)}</>
                     )}
                 </p>
 

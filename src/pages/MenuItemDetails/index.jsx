@@ -254,10 +254,10 @@ const MenuItemDetails = () => {
                             {discountedPrice ? (
                                 <div className="flex items-center gap-3">
                                     <span className="text-4xl font-bold text-orange-600 dark:text-orange-400">
-                                        ${discountedPrice}
+                                        ${discountedPrice.toFixed(2)}
                                     </span>
                                     <span className="text-2xl line-through text-gray-400 dark:text-gray-500">
-                                        ${menuItem.price}
+                                        ${menuItem.price.toFixed(2)}
                                     </span>
                                 </div>
                             ) : (
