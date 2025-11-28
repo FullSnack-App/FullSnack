@@ -10,13 +10,15 @@ export default function AdminLayout() {
   const toggleAside = () => setIsAsideOpen(!isAsideOpen);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <AdminNav toggleAside={toggleAside} />
+
+    
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+      <AdminNav />
 
       <div className="flex flex-1">
         <AdminAside isOpen={isAsideOpen} onClose={toggleAside} />
 
-        <main className="flex-1 p-6 bg-gray-50 overflow-y-auto">
+        <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-900 overflow-y-auto">
           <Outlet />
         </main>
       </div>

@@ -34,7 +34,7 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
 
     return (
         <div
-            className={`card bg-base-100 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden ${
+            className={`card bg-base-100 dark:bg-gray-800 shadow-sm hover:shadow-lg transition-transform duration-300 relative overflow-hidden ${
                 isLoading ? 'opacity-60 pointer-events-none' : ''
             }`}
         >
@@ -47,9 +47,9 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
             </figure>
 
             {/* Rating */}
-            <div className="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-full absolute right-2 top-3 shadow-sm">
+            <div className="flex items-center gap-1 bg-white/90 dark:bg-gray-700/90 px-2 py-1 rounded-full absolute right-2 top-3 shadow-sm">
                 <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                <span className="text-sm font-medium text-gray-700">{rate}</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{rate}</span>
             </div>
 
             {offer && (
@@ -66,13 +66,13 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
             )}
 
             <div className="card-body mt-5 p-5">
-                <h3 className="card-title text-lg mb-2">{name}</h3>
-                <p className="text-sm text-gray-600 mb-3">{description}</p>
+                <h3 className="card-title text-lg mb-2 dark:text-gray-100">{name}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{description}</p>
 
-                <p className="text-xl text-orange-600 mb-3">
+                <p className="text-xl text-orange-600 dark:text-orange-400 mb-3">
                     {offer ? (
                         <>
-                            <span className="line-through text-gray-400 mr-2">${price}</span>
+                            <span className="line-through text-gray-400 dark:text-gray-500 mr-2">${price}</span>
                             <span>${discountedPrice}</span>
                         </>
                     ) : (
@@ -83,20 +83,20 @@ function MenuItem({ _id, name, description, price, imageUrl, rate, offer }) {
                 {/* Quantity + Add to Cart */}
                 <div className="card-actions flex flex-col items-center gap-3 mt-4">
                     {/* Quantity Controls */}
-                    <div className="flex items-center justify-center gap-3 bg-orange-50 px-4 py-2 rounded-full">
+                    <div className="flex items-center justify-center gap-3 bg-orange-50 dark:bg-gray-700 px-4 py-2 rounded-full">
                         <button
                             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                            className="p-1 text-orange-600 hover:text-orange-700 transition"
+                            className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition"
                             disabled={isLoading}
                         >
                             <Minus size={18} />
                         </button>
 
-                        <span className="text-lg text-gray-700 font-semibold">{quantity}</span>
+                        <span className="text-lg text-gray-700 dark:text-gray-200 font-semibold">{quantity}</span>
 
                         <button
                             onClick={() => setQuantity((q) => q + 1)}
-                            className="p-1 text-orange-600 hover:text-orange-700 transition"
+                            className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition"
                             disabled={isLoading}
                         >
                             <Plus size={18} />

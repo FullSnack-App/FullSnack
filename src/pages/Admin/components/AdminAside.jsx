@@ -21,6 +21,7 @@ export default function AdminAside({ isOpen, onClose }) {
                     <span className="font-medium text-gray-800">Hello, Admin</span>
                 </div>
 
+
                 <nav className="flex flex-col space-y-2">
                     <NavLink to="/admin" end className={linkClasses}>
                         <FaHome /> Dashboard

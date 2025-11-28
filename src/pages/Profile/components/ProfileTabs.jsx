@@ -7,7 +7,7 @@ const ProfileTabs = ({ activeTab, setActiveTab }) => {
     ];
 
     return (
-        <div className="flex border-b border-gray-200">
+        <div className="flex border-b border-gray-200 dark:border-gray-700">
             {tabs.map((tab) => (
                 <button
                     key={tab.id}
@@ -15,7 +15,7 @@ const ProfileTabs = ({ activeTab, setActiveTab }) => {
                     className={`flex-1 py-4 px-6 font-semibold transition-all ${
                         activeTab === tab.id
                             ? 'bg-orange-600 text-white'
-                            : 'text-gray-600 hover:bg-gray-50'
+                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                 >
                     {tab.label}

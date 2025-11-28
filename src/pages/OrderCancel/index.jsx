@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 
 const OrderCancel = () => {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
-            <div className="bg-white rounded-2xl shadow-lg p-10 text-center max-w-md w-full">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-10 text-center max-w-md w-full">
                 <XCircleIcon className="w-20 h-20 text-red-500 mx-auto mb-6" />
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">Payment Cancelled</h1>
-                <p className="text-gray-600 mb-6">
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">Payment Cancelled</h1>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
                     Your payment was not completed or was canceled. Don’t worry — your order has not
                     been placed.
                 </p>

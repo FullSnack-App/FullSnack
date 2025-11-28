@@ -51,7 +51,7 @@ export default function AdminMenuItem() {
 
     toast.custom(
       (t) => (
-        <div className="bg-white p-4 rounded-lg shadow-md border flex flex-col gap-3 max-w-sm">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border dark:border-gray-700 flex flex-col gap-3 max-w-sm">
           <p className="font-medium">
             Are you sure you want to {actionText.toLowerCase()} this item?
           </p>
