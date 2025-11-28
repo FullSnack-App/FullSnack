@@ -3,10 +3,12 @@ import { useForm } from 'react-hook-form';
 import apiClient from '../../config/axiosConfig';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { useCart } from '../../hooks/useCart';
 
 const Checkout = () => {
     // 🛒 Cart Data from backend
-      const navigate = useNavigate();
+    const navigate = useNavigate();
+    const { clearCart } = useCart();
 
     const [items, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +17,6 @@ const Checkout = () => {
         const fetchCart = async () => {
             try {
                 const response = await apiClient.get('/cart');
-                console.log(response.data.cart.items);
                 setCartItems(response.data.cart.items || []);
             } catch (error) {
                 console.error('❌ Failed to fetch cart:', error);
@@ -72,13 +73,14 @@ const Checkout = () => {
                 ...data,
             });
             toast.dismiss(loadingToast);
-            console.log(response);
             if (response.data.checkoutUrl) {
                 toast.loading('Redirecting to Stripe checkout...');
 
                 window.location.href = response.data.checkoutUrl;
             } else {
                 toast.success('Order placed successfully!');
+                // Clear the cart after successful order
+                await clearCart();
                 setTimeout(() => {
                     navigate(`/order-success/${response.data.order._id}`);
                 }, 500);
@@ -92,12 +94,18 @@ const Checkout = () => {
 
     if (loading) return <div className="h-83 text-center py-20">Loading your cart...</div>;
     if (items.length === 0)
-        return <div className="h-83 text-center py-20 text-gray-600 dark:text-gray-400">🛒 Your cart is empty.</div>;
+        return (
+            <div className="h-83 text-center py-20 text-gray-600 dark:text-gray-400">
+                🛒 Your cart is empty.
+            </div>
+        );
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
             <div className="container mx-auto px-4">
-                <h1 className="text-4xl font-bold mb-10 text-gray-800 dark:text-gray-100 text-center">Checkout</h1>
+                <h1 className="text-4xl font-bold mb-10 text-gray-800 dark:text-gray-100 text-center">
+                    Checkout
+                </h1>
 
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -119,7 +127,7 @@ const Checkout = () => {
                                         {...register('customerFullName', {
                                             required: 'Full name is required',
                                         })}
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                         placeholder="Enter your full name"
                                     />
                                     {errors.customerFullName && (
@@ -130,7 +138,9 @@ const Checkout = () => {
                                 </div>
 
                                 <div>
-                                    <label className="label font-medium text-gray-600 dark:text-gray-300">Email</label>
+                                    <label className="label font-medium text-gray-600 dark:text-gray-300">
+                                        Email
+                                    </label>
                                     <input
                                         {...register('customerEmail', {
                                             required: 'Email is required',
@@ -139,7 +149,7 @@ const Checkout = () => {
                                                 message: 'Invalid email address',
                                             },
                                         })}
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                         placeholder="you@example.com"
                                     />
                                     {errors.customerEmail && (
@@ -164,7 +174,7 @@ const Checkout = () => {
                                     {...register('deliveryAddress', {
                                         required: 'Address is required',
                                     })}
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                     placeholder="Enter your delivery address"
                                 />
                                 {errors.deliveryAddress && (
@@ -186,7 +196,7 @@ const Checkout = () => {
                                             message: 'Enter a valid phone number',
                                         },
                                     })}
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
                                     placeholder="e.g. 01012345678"
                                 />
                                 {errors.phoneNumber && (
@@ -290,7 +300,9 @@ const Checkout = () => {
 
                             <div
                                 className={`flex justify-between ${
-                                    totalSaved > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-gray-800 dark:text-gray-200'
+                                    totalSaved > 0
+                                        ? 'text-orange-600 dark:text-orange-400'
+                                        : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 <span>Total</span>

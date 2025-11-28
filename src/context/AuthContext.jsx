@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }) => {
         fetchUserData();
     }, [state.token]);
 
-    const logout = async (clearCartCallback = () => { }) => {
+    const logout = async (clearCartCallback = () => {}) => {
         localStorage.removeItem('userToken');
         localStorage.removeItem('user');
         localStorage.removeItem('guestCart');
@@ -112,14 +112,6 @@ export const AuthProvider = ({ children }) => {
         if (clearCartCallback && typeof clearCartCallback === 'function') {
             clearCartCallback();
         }
-
-        dispatch({ type: AUTH_ACTIONS.LOGOUT });
-    };
-
-    const logoutAdmin = () => {
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('guestCart');
 
         dispatch({ type: AUTH_ACTIONS.LOGOUT });
     };
@@ -170,25 +162,6 @@ export const AuthProvider = ({ children }) => {
             dispatch({ type: AUTH_ACTIONS.LOGIN_START });
             const response = await apiClient.post('/user/register', userData);
             const data = response.data;
-
-            // After successful registration, automatically log the user in
-            const userResponse = await apiClient.get('/user/me', {
-                headers: { Authorization: `Bearer ${data.userToken}` },
-            });
-
-            const user = userResponse.data.user;
-
-            localStorage.setItem('userToken', data.userToken);
-
-            dispatch({
-                type: AUTH_ACTIONS.LOGIN_SUCCESS,
-                payload: {
-                    token: data.userToken,
-                    user: user,
-                    role: user.role,
-                },
-            });
-
             return { success: true, data };
         } catch (error) {
             const backendError =
@@ -220,7 +193,6 @@ export const AuthProvider = ({ children }) => {
         ...state,
         login,
         logout,
-        logoutAdmin,
         register,
         setUser,
     };

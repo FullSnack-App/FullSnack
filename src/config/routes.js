@@ -8,6 +8,7 @@ export const ROUTES = {
     ORDER_SUCCESS: '/order-success/:orderId',
     ORDER_CANCEL: '/order-cancel',
     OFFER: '/offer/:id',
+    MENU_ITEM: '/menu-item/:id',
     ADMIN: '/admin',
     ADMIN_MENU: '/admin/menu',
     ADMIN_OFFERS: '/admin/offers',

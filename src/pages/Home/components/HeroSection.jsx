@@ -1,6 +1,13 @@
 import image1 from '../../../Chef.jfif';
 
 export default function HeroSection() {
+    const scrollToMenu = () => {
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+            menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <section className="shadow-sm bg-[#FFF8EE] dark:bg-gray-800 px-8 md:px-16 py-12 md:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
@@ -18,6 +25,13 @@ export default function HeroSection() {
                         Experience the finest cuisine from local restaurants. Fresh ingredients,
                         amazing flavors, fast delivery.
                     </p>
+
+                    <button
+                        onClick={scrollToMenu}
+                        className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
+                    >
+                        Explore our Menu
+                    </button>
                 </div>
                 <div className="order-1 md:order-2 flex justify-center">
                     <img

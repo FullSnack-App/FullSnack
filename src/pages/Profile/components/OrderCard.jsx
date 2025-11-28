@@ -50,7 +50,7 @@ const OrderCard = ({ order }) => {
                         {order.items.map((item, idx) => (
                             <div
                                 key={idx}
-                                className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg"
+                                className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"
                             >
                                 {item.menuItem?.imageUrl && (
                                     <img

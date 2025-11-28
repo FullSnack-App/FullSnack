@@ -5,11 +5,11 @@ import { FaBars } from 'react-icons/fa';
 
 export default function AdminNav({ toggleAside }) {
     const navigate = useNavigate();
-    const { logoutAdmin } = useAuth();
+    const { logout } = useAuth();
 
     const handleLogout = () => {
-        logoutAdmin();
-        window.location.href = '/';
+      logout();
+        navigate('/');
     };
     return (
         <nav className="bg-[#2E2A2A] text-white flex justify-between items-center px-6 py-4 shadow-md">

@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import HeroSection from './components/HeroSection';
 import Menu from './components/Menu';
 import Offers from './components/Offers';
+
 const Home = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+        // Check if we should scroll to menu section
+        if (location.state?.scrollToMenu) {
+            setTimeout(() => {
+                const menuSection = document.getElementById('menu');
+                if (menuSection) {
+                    menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+    }, [location]);
+
     return (
         <>
             <HeroSection />

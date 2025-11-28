@@ -48,13 +48,7 @@ const LoginForm = ({ formData, handleInputChange, isLoading, error, onSwitchToRe
             </Button>
 
             {/* Footer Links */}
-            <div className="mt-6 text-center space-y-3">
-                <button
-                    type="button"
-                    className="text-sm text-primary hover:text-primary font-medium block w-full"
-                >
-                    Forgot password?
-                </button>
+            <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                     Don't have an account?{' '}
                     <button

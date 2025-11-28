@@ -38,28 +38,30 @@ const ProfileForm = ({ profileData, setProfileData, handleProfileUpdate }) => {
                 <Input
                     label="Phone Number"
                     type="tel"
-                    id="phoneNumber"
-                    value={profileData.phoneNumber}
+                    id="phone"
+                    value={profileData.phone}
                     onChange={(e) =>
                         setProfileData({
                             ...profileData,
-                            phoneNumber: e.target.value,
+                            phone: e.target.value,
                         })
                     }
                     placeholder="Enter your phone number"
                 />
                 <Input
-                    label="Address"
-                    type="text"
-                    id="address"
-                    value={profileData.address}
+                    label="Age"
+                    type="number"
+                    id="age"
+                    value={profileData.age}
                     onChange={(e) =>
                         setProfileData({
                             ...profileData,
-                            address: e.target.value,
+                            age: e.target.value,
                         })
                     }
-                    placeholder="Enter your address"
+                    placeholder="Enter your age"
+                    min="1"
+                    max="120"
                 />
                 <Button type="submit" className="w-full py-3 text-lg">
                     Update Profile
