@@ -4,6 +4,10 @@ export default function OffersTable({
   buttonsDisabled,
   handleActivate,
   onEdit,
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange,
 }) {
   const skeletonRows = Array.from({ length: 5 });
 
@@ -85,8 +89,8 @@ export default function OffersTable({
                     {/* Edit button */}
                     <button
                       className={`btn btn-sm w-28 bg-warning hover:bg-warning-600 text-white border-none ${buttonsDisabled
-                          ? "opacity-50 cursor-not-allowed"
-                          : ""
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
                         }`}
                       onClick={() => onEdit(offer)}
                       disabled={buttonsDisabled}
@@ -97,8 +101,8 @@ export default function OffersTable({
                     {/* Activate/Deactivate button */}
                     <button
                       className={`btn btn-sm w-28 border-none text-white ${offer.isActive
-                          ? "bg-red-600 hover:bg-red-700"
-                          : "bg-green-600 hover:bg-green-700"
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-green-600 hover:bg-green-700"
                         } ${buttonsDisabled
                           ? "opacity-50 cursor-not-allowed"
                           : ""
@@ -115,6 +119,38 @@ export default function OffersTable({
           }
         </tbody>
       </table>
+      {!loading && totalItems > itemsPerPage && (
+        <div className="flex justify-center items-center mt-6 space-x-2">
+          <button
+            className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <div className="flex space-x-1">
+            {Array.from({ length: Math.ceil(totalItems / itemsPerPage) }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                className={`px-3 py-2 text-sm font-medium rounded-md ${page === currentPage
+                  ? 'bg-[#FF5722] text-white border border-[#FF5722]'
+                  : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
+                  }`}
+                onClick={() => onPageChange(page)}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+          <button
+            className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

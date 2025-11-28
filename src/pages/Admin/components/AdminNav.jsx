@@ -1,18 +1,27 @@
 import Button from '../../../components/Button';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../../hooks/useAuth';
+import { FaBars } from 'react-icons/fa';
 
-export default function AdminNav() {
+export default function AdminNav({ toggleAside }) {
     const navigate = useNavigate();
     const { logoutAdmin } = useAuth();
 
     const handleLogout = () => {
         logoutAdmin();
-  window.location.href = '/';
+        window.location.href = '/';
     };
     return (
         <nav className="bg-[#2E2A2A] text-white flex justify-between items-center px-6 py-4 shadow-md">
-            <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+            <div className="flex items-center gap-4">
+                <button
+                    onClick={toggleAside}
+                    className="md:hidden text-white hover:text-gray-300"
+                >
+                    <FaBars size={20} />
+                </button>
+                <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+            </div>
 
             <Button
                 onClick={handleLogout}

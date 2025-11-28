@@ -68,8 +68,7 @@ export const routes = (
         }
       />
     </Route>
-<Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
-    {/* صفحات الأدمن */}
+    <Route path={ROUTES.CONFIRM_MAIL} element={<MailVerification />} />
     <Route
       path={ROUTES.ADMIN}
       element={

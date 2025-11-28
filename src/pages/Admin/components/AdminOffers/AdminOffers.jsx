@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import OfferModal from "./OfferModal";
 import OffersTable from "./OfferTable";
 import { addOffer, toggleActivateOffer, updateOffer } from "../../../../services/offersServices";
-import { useOffer } from './../../../../hooks/useOffer';
+import { useOffer } from '../../../../hooks/useOffer';
 import { useMenu } from "../../../../hooks/useMenu";
 
 export default function AdminOffers() {
@@ -11,6 +11,8 @@ export default function AdminOffers() {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [modalState, setModalState] = useState({ isOpen: false, mode: "add" });
   const [currentOffer, setCurrentOffer] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   /** ✅ Handle Add / Update Offer */
   const { menuItems = [] } = useMenu();
@@ -137,7 +139,7 @@ export default function AdminOffers() {
       </div>
 
       <OffersTable
-        offers={offers}
+        offers={offers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)}
         loading={loading}
         buttonsDisabled={buttonsDisabled}
         handleActivate={handleActivate}
@@ -145,6 +147,10 @@ export default function AdminOffers() {
           setCurrentOffer(offer);
           setModalState({ isOpen: true, mode: "edit" });
         }}
+        currentPage={currentPage}
+        totalItems={offers.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
       />
 
       {modalState.isOpen && (

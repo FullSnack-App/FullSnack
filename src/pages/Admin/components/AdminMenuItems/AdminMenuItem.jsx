@@ -14,6 +14,8 @@ export default function AdminMenuItem() {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [modalState, setModalState] = useState({ isOpen: false, mode: "add" });
   const [currentItem, setCurrentItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   /** 🔹 handle add or update logic */
   const handleSaveItem = async (itemData, mode) => {
@@ -103,13 +105,17 @@ export default function AdminMenuItem() {
 
       <MenuTable
         loading={loading}
-        menuItems={menuItems}
+        menuItems={menuItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)}
         buttonsDisabled={buttonsDisabled}
         handleActivate={handleActivate}
         onEdit={(item) => {
           setCurrentItem(item);
           setModalState({ isOpen: true, mode: "edit" });
         }}
+        currentPage={currentPage}
+        totalItems={menuItems.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
       />
 
       {modalState.isOpen && (

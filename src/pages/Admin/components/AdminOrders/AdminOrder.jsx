@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaSpinner, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { useOrder } from '../../../../hooks/useOrder';
 
 export default function AdminOrders() {
   const { orders, loading } = useOrder();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   if (loading) {
     return (
@@ -36,7 +38,7 @@ export default function AdminOrders() {
                 </td>
               </tr>
             ) : (
-              orders.map((order) => (
+              orders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order) => (
                 <tr key={order._id} className="border-t hover:bg-gray-50 transition">
                   <td className="py-3 px-4 font-medium text-gray-800">
                     {order.customerFullName}
@@ -70,6 +72,38 @@ export default function AdminOrders() {
           </tbody>
 
         </table>
+        {!loading && orders && orders.length > itemsPerPage && (
+          <div className="flex justify-center items-center mt-6 space-x-2">
+            <button
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <div className="flex space-x-1">
+              {Array.from({ length: Math.ceil(orders.length / itemsPerPage) }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  className={`px-3 py-2 text-sm font-medium rounded-md ${page === currentPage
+                    ? 'bg-[#FF5722] text-white border border-[#FF5722]'
+                    : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
+                    }`}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+            <button
+              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
